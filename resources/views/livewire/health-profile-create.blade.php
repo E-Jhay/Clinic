@@ -203,8 +203,8 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
-                      <button type="submit" class="btn btn-primary">Save</button>
-                      <button wire:click.prevent="closeModal" class="btn btn-warning float-right">Cancel</button>
+                      <button type="submit" class="btn btn-primary float-right">{{$buttonText}}</button>
+                      <button wire:click.prevent="closeModal" class="btn btn-warning">Cancel</button>
                     </div>
                 </div>
               </form>

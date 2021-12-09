@@ -4,21 +4,32 @@ namespace App\Http\Livewire;
 
 use App\Models\Designation;
 use App\Models\HealthProfile;
+use Livewire\WithPagination;
 use Livewire\Component;
 
 class HealthProfileCrud extends Component
 {
-
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $searchTerm;
+    public $buttonText = "Save";
+    public $sortDirection = 'asc';
+    public $sortBy = 'created_at';
+    public $sortDesignation;
+    public $perPage = 10;
     public $designations;
+    public $titlePage = "";
+    public $designationStatus = "";
     public $isOpen = 0;
+    public $healthProfileId;
     public $name, $mobile_no, $age, $sex, $civil_status, $birthday, $address, $contact_person, $symptoms, $illness, $hospitalization, $allergies, $ps_history, $ob_history, $temperature, $pulse, $blood_pressure, $designation_id;
 
 
     public function render()
     {
         return view('livewire.health-profile-crud', [
-            'healthProfiles' => $this->healthProfile,
+            'healthProfiles'    =>  $this->healthProfile,
+            'designations'      =>  Designation::all(),
         ]);
     }
 
@@ -93,7 +104,7 @@ class HealthProfileCrud extends Component
         // dd($this);
         
         try{
-            HealthProfile::create([
+            HealthProfile::updateOrCreate(['id' => $this->healthProfileId], [
                 'name'              =>      $this->name,
                 'mobile_no'         =>      $this->mobile_no,
                 'age'               =>      $this->age,
@@ -115,7 +126,7 @@ class HealthProfileCrud extends Component
             ]);
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
-                'message'=>"Health Profile Inserted"
+                'message'=> $this->healthProfileId ? 'Health Profile Updated' : 'Health Profile Inserted'
             ]);
         }catch(\Exception $e){
             $this->dispatchBrowserEvent('alert',[
@@ -128,15 +139,61 @@ class HealthProfileCrud extends Component
         $this->resetFields();
     }
 
+    public function edit($id)
+    {
+        $this->buttonText = "Update";
+        $healthProfile = HealthProfile::findOrFail($id);
+        $this->name                 = $healthProfile->name;
+        $this->mobile_no            = $healthProfile->mobile_no;
+        $this->age                  = $healthProfile->age;
+        $this->sex                  = $healthProfile->sex;
+        $this->civil_status         = $healthProfile->civil_status;
+        $this->birthday             = $healthProfile->birthday;
+        $this->address              = $healthProfile->address;
+        $this->contact_person       = $healthProfile->contact_person;
+        $this->symptoms             = $healthProfile->symptoms;
+        $this->illness              = $healthProfile->illness;
+        $this->hospitalization      = $healthProfile->hospitalization;
+        $this->allergies            = $healthProfile->allergies;
+        $this->ps_history           = $healthProfile->ps_history;
+        $this->ob_history           = $healthProfile->ob_history;
+        $this->temperature          = $healthProfile->temperature;
+        $this->pulse                = $healthProfile->pulse;
+        $this->blood_pressure       = $healthProfile->blood_pressure;
+        $this->designation_id       = $healthProfile->designation_id;
+        $this->healthProfileId      = $id;
+        $this->emit('gotoTop');
+        $this->openModal();
+    }
+
     public function getHealthProfileProperty()
     {
-        $searchTerm = '%'. $this->searchTerm .'%';
+        $searchTerm = '%'.$this->searchTerm.'%';
+        $sortDesignation = $this->sortDesignation;
         return HealthProfile::with('designation')
-        ->select('id', 'name', 'address', 'designation_id')
+            ->select('id', 'name', 'address', 'designation_id')
+            ->when($sortDesignation, function ($q) use ($sortDesignation) {
+                $q->where('designation_id', $sortDesignation);
+            })
             ->when($searchTerm, function($q) use ($searchTerm){
                 $q->where('name', 'like', $searchTerm)
-                ->orWhere('address', 'like', $searchTerm);
+                ->orWhere('address','like', $searchTerm);
             })
-            ->get();
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate($this->perPage);
+    }
+
+    public function changeStatus($designationId)
+    {
+        $designations = Designation::select('id', 'name')->get();
+        foreach($designations as $designation){
+            if($designationId == $designation['id'])
+                $this->titlePage = $designation['name'];
+            elseif($designationId == '')
+                $this->titlePage = "";
+
+        }
+        $this->resetPage();
+        return $this->designationStatus = $designationId;
     }
 }
