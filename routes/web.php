@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::view('/health-profile', 'medical-records.health-profile')->name('health-profile');
+Route::view('/medicine', 'inventory.medicine')->name('medicine');
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

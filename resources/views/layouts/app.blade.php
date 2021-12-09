@@ -150,26 +150,27 @@ aria-hidden="true">
             }
         })
     })
-    window.addEventListener('swal:updateClaimable', event => {
+    window.addEventListener('swal:addStock', event => {
         Swal.fire({
             title: event.detail.title,
             text: event.detail.text,
             icon: event.detail.type,
+            id: event.detail.id,
             html: `
                 <input
-                type="text"
+                type="number"
                 value=""
                 class="form-control mb-2"
-                placeholder="Claimed By"
-                id="claimedBy">`,
+                placeholder="Quantity"
+                id="stock">`,
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             }).then((result) => {
             if (result.isConfirmed) {
-                const claimedBy = Swal.getHtmlContainer().querySelector('#claimedBy')
+                const claimedBy = Swal.getHtmlContainer().querySelector('#stock')
                 // console.log(appeals.value, remarks.value)
-                Livewire.emit('updateClaimableConfirmed', claimedBy.value)
+                Livewire.emit('addStockConfirmed', stock.value, event.detail.id)
             }
         })
     })

@@ -105,7 +105,7 @@
           </li>
 
           <li class="nav-item has-treeview">
-            <a href="" class="nav-link {{ request()->is('monthly-reports') || request()->is('quarterly-reports') ? 'active' : null }}">
+            <a href="" class="nav-link {{ request()->is('medicine') || request()->is('quarterly-reports') ? 'active' : null }}">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Inventory
@@ -114,7 +114,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('medicine')}}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
                     Medicines
