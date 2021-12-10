@@ -1,9 +1,9 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{route('dashboard')}}" class="brand-link">
-      <img src="{{ asset('dist/img/psu_logo.png') }}" alt="PSU Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">{{ config('app.name', 'Registrar Office') }}</span>
+      <img src="{{ asset('dist/img/psu.png') }}" alt="PSU Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">{{ config('app.name', 'Clinic Office') }}</span>
     </a>
 
     <!-- Sidebar -->
@@ -13,7 +13,7 @@
         <div class="image">
           <img src="{{ asset('dist/img/user3.png') }}" class="img-circle elevation-3" alt="User Image">
         </div>
-        <div class="info text-white">
+        <div class="info">
           {{Auth::user()->name}}
         </div>
       </div>
@@ -33,7 +33,7 @@
             </a>
           </li>
           <li class="nav-item has-treeview">
-            <a href="" class="nav-link {{ request()->is('monthly-reports') || request()->is('quarterly-reports') ? 'active' : null }}">
+            <a href="" class="nav-link {{ request()->is('health-profile') || request()->is('daily-treatment-record') || request()->is('patient-records') ? 'active' : null }}">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Medical Record
@@ -50,7 +50,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('daily-treatment-record') }}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
                     Daily Time Record
@@ -58,10 +58,10 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('patient-records') }}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
-                    Patient
+                    Patient Records
                   </p>
                 </a>
               </li>
@@ -105,7 +105,7 @@
           </li>
 
           <li class="nav-item has-treeview">
-            <a href="" class="nav-link {{ request()->is('medicine') || request()->is('quarterly-reports') ? 'active' : null }}">
+            <a href="" class="nav-link {{ request()->is('medicine') || request()->is('supply') || request()->is('equipment') ? 'active' : null }}">
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Inventory
@@ -122,7 +122,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('supply')}}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
                     Supplies
@@ -130,7 +130,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('equipment')}}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
                     Equipments

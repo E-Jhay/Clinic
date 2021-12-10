@@ -16,8 +16,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1 class="m-0 d-inline">Medicines</h1>
-                    <button wire:click="create()" class="d-inline btn btn-primary float-right">Store New Medicine</button>
+                    <h1 class="m-0 d-inline">Supplies</h1>
+                    <button wire:click="create()" class="d-inline btn btn-primary float-right">Store New Supply</button>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -29,7 +29,7 @@
         <div class="container-fluid">
             <div class="row">
                 @if($isOpen)
-                    @include('livewire.medicine-create')
+                    @include('livewire.supply-create')
                 @endif
             </div>
             <div class="row">
@@ -74,29 +74,29 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($medicines as $medicine)
+                                                @foreach ($supplies as $supply)
                                                 <tr>
-                                                    <td>{{ucfirst($medicine->name)." ".$medicine->id}}</td>
-                                                    <td>{{$medicine->description}}</td>
-                                                    @if ($medicine->total <= 0)
+                                                    <td>{{ucfirst($supply->name)." ".$supply->id}}</td>
+                                                    <td>{{$supply->description}}</td>
+                                                    @if ($supply->total <= 0)
                                                         <td>
                                                             <div class="bg-danger rounded px-1">Out of Stock</div>
                                                         </td>
                                                     @else
-                                                        <td class="text-center">{{$medicine->total}}</td>
+                                                        <td class="text-center">{{$supply->total}}</td>
                                                     @endif
                                                     <td class="text-center">
-                                                        <button class="btn btn-success btn-sm" wire:click="addStock({{$medicine->id}})"><i class="fas fa-plus-circle"></i> Add Stock</button>
-                                                        <button class="btn btn-warning btn-sm" wire:click="removeStock({{$medicine->id}})"><i class="fas fa-minus-circle"></i> Remove Stock</button>
+                                                        <button class="btn btn-success btn-sm" wire:click="addStock({{$supply->id}})"><i class="fas fa-eye"></i> Add Stock</button>
+                                                        <button class="btn btn-warning btn-sm" wire:click="removeStock({{$supply->id}})"><i class="fas fa-eye"></i> Remove Stock</button>
                                                     </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                             </table>
                                             <p>
-                                                Showing {{$medicines->firstItem()}} to {{$medicines->lastItem()}} out of {{$medicines->total()}} items.
+                                                Showing {{$supplies->firstItem()}} to {{$supplies->lastItem()}} out of {{$supplies->total()}} items.
                                             </p>
-                                            {{ $medicines->links() }}
+                                            {{ $supplies->links() }}
                                         </div>
                                     </div>
                                 </div>

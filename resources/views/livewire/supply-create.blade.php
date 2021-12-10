@@ -1,13 +1,13 @@
 <div class="col-md-12">
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Add Medicine</h3>
+            <h3 class="card-title">Add Supply</h3>
         </div>
         <div class="card-body" style="padding-inline: 14rem">
             <form wire:submit.prevent="store()">
                 <div class="row mb-3">
                   <div class="col-md-6">
-                    <label for="name">Medicine Name</label>
+                    <label for="name">Supply Name</label>
                     <input type="text" class="form-control" wire:model.lazy="name" id="name" placeholder="" value="" >
                     @error('name')
                       <div class="text-danger">

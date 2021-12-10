@@ -172,13 +172,20 @@ class HealthProfileCrud extends Component
         $sortDesignation = $this->sortDesignation;
         return HealthProfile::with('designation')
             ->select('id', 'name', 'address', 'designation_id')
-            ->when($sortDesignation, function ($q) use ($sortDesignation) {
-                $q->where('designation_id', $sortDesignation);
-            })
-            ->when($searchTerm, function($q) use ($searchTerm){
-                $q->where('name', 'like', $searchTerm)
-                ->orWhere('address','like', $searchTerm);
-            })
+            // ->where('designation_id', 3)
+            // ->when($sortDesignation, function ($q) use ($sortDesignation) {
+            //     $q->where('designation_id', $sortDesignation);
+            // })
+            ->when($sortDesignation, function($q) use ($sortDesignation, $searchTerm){
+                $q->where('designation_id', $sortDesignation)
+                    ->where('name', 'like', $searchTerm);
+                // ->when($searchTerm, function ($query) use ($searchTerm){
+                //     $query->where('name', 'like', $searchTerm)
+                //     ->orWhere('address', 'like', $searchTerm);
+                // });
+                }, function($q) use ($searchTerm){
+                    $q->where('name', 'like', $searchTerm);
+                })
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate($this->perPage);
     }

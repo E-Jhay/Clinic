@@ -2,13 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Medicine;
+use App\Models\Equipment;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 
 use Livewire\Component;
 
-class MedicineCrud extends Component
+class EquipmentCrud extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -27,15 +27,15 @@ class MedicineCrud extends Component
 
     public function render()
     {
-        return view('livewire.medicine-crud',[
-            'medicines' =>  $this->medicine,
+        return view('livewire.equipment-crud',[
+            'equipments' =>  $this->equipment,
         ]);
     }
 
-    public function getMedicineProperty()
+    public function getequipmentProperty()
     {
         $searchTerm = '%'.$this->searchTerm.'%';
-        return Medicine::select('id', 'name', 'description', 'stock', DB::raw('SUM(stock) as total'),)
+        return Equipment::select('id', 'name', 'description', 'stock', DB::raw('SUM(stock) as total'),)
             ->when($searchTerm, function($q) use ($searchTerm){
                 $q->where('name', 'like', $searchTerm);
             })
@@ -75,16 +75,16 @@ class MedicineCrud extends Component
         ]);
         
         try{
-            $existingMedicine = Medicine::where('name', strtolower($this->name))->first();
-            if($existingMedicine){
-                $existingMedicine->update([
+            $existingEquipment = Equipment::where('name', strtolower($this->name))->first();
+            if($existingEquipment){
+                $existingEquipment->update([
                     'name'  =>  strtolower($this->name),
-                    'stock'  =>  $existingMedicine->stock + $this->stock,
+                    'stock'  =>  $existingEquipment->stock + $this->stock,
                     'description'  =>  $this->description,
                 ]);
             }
             else{
-                Medicine::create([
+                Equipment::create([
                     'name'  =>  strtolower($this->name),
                     'stock'  =>  $this->stock,
                     'description'  =>  $this->description,
@@ -93,7 +93,7 @@ class MedicineCrud extends Component
 
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
-                'message'=>'New Medicine Added'
+                'message'=>'New Equipment Added'
             ]);
         }catch(\Exception $e){
             $this->dispatchBrowserEvent('alert',[
@@ -118,10 +118,10 @@ class MedicineCrud extends Component
     public function addStockConfirmed($quantity, $id)
     {
         try{
-            $existingMedicine = Medicine::findOrFail($id);
-                if($existingMedicine){
-                    $existingMedicine->update([
-                        'stock'  =>  $existingMedicine->stock + $quantity,
+            $existingEquipment = Equipment::findOrFail($id);
+                if($existingEquipment){
+                    $existingEquipment->update([
+                        'stock'  =>  $existingEquipment->stock + $quantity,
                     ]);
                 }
             $this->dispatchBrowserEvent('alert',[
@@ -147,15 +147,15 @@ class MedicineCrud extends Component
     public function removeStockConfirmed($quantity, $id)
     {
         try{
-            $existingMedicine = Medicine::findOrFail($id);
-                if($existingMedicine){
-                    if($existingMedicine->stock >= $quantity){
-                        $existingMedicine->update([
-                            'stock'  =>  $existingMedicine->stock - $quantity,
+            $existingEquipment = Equipment::findOrFail($id);
+                if($existingEquipment){
+                    if($existingEquipment->stock >= $quantity){
+                        $existingEquipment->update([
+                            'stock'  =>  $existingEquipment->stock - $quantity,
                         ]);
                     }
                     else{
-                        $existingMedicine->update([
+                        $existingEquipment->update([
                             'stock'  =>  0,
                         ]);
                     }
@@ -171,6 +171,4 @@ class MedicineCrud extends Component
             ]);
         }
     }
-
-
 }

@@ -16,8 +16,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1 class="m-0 d-inline">Medicines</h1>
-                    <button wire:click="create()" class="d-inline btn btn-primary float-right">Store New Medicine</button>
+                    <h1 class="m-0 d-inline">Patient</h1>
+                    <button wire:click="create()" class="d-inline btn btn-primary float-right">Insert DTR</button>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -28,11 +28,6 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                @if($isOpen)
-                    @include('livewire.medicine-create')
-                @endif
-            </div>
-            <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="tab-content p-3">
@@ -40,6 +35,14 @@
                                 <div class="row">
                                     <div class="form-group col-3 mt-2">
                                         <input type="text"  class="form-control border-secondary" placeholder="Search..." wire:model="searchTerm"/>
+                                    </div>
+                                    <div class="form-group col-3 mt-2">
+                                        <select class="form-control custom-select border-secondary" wire:model="sortDesignation">
+                                            <option value="">All</option>
+                                            @foreach ($designations as $designation)
+                                                <option value="{{$designation->id}}">{{$designation->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group col-2 mt-2">
                                         <select class="form-control custom-select border-secondary" wire:model="sortBy">
@@ -68,35 +71,28 @@
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
-                                                    <th>Description</th>
-                                                    <th style="width: 120px">Stock</th>
-                                                    <th style="width: 300px" class="text-center">Action</th>
+                                                    <th>Diagnosis</th>
+                                                    <th>Designation</th>
+                                                    <th style="width: 150px" class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($medicines as $medicine)
+                                                @foreach ($patients as $patient)
                                                 <tr>
-                                                    <td>{{ucfirst($medicine->name)." ".$medicine->id}}</td>
-                                                    <td>{{$medicine->description}}</td>
-                                                    @if ($medicine->total <= 0)
-                                                        <td>
-                                                            <div class="bg-danger rounded px-1">Out of Stock</div>
-                                                        </td>
-                                                    @else
-                                                        <td class="text-center">{{$medicine->total}}</td>
-                                                    @endif
+                                                    <td>{{ucfirst($patient->name)." ".$patient->id}}</td>
+                                                    <td>{{ucfirst($patient->diagnosis)}}</td>
+                                                    <td>{{$patient->designation->name}}</td>
                                                     <td class="text-center">
-                                                        <button class="btn btn-success btn-sm" wire:click="addStock({{$medicine->id}})"><i class="fas fa-plus-circle"></i> Add Stock</button>
-                                                        <button class="btn btn-warning btn-sm" wire:click="removeStock({{$medicine->id}})"><i class="fas fa-minus-circle"></i> Remove Stock</button>
+                                                        <button class="btn btn-success btn-sm" wire:click="viewRecords('{{$patient->name}}')"><i class="fas fa-eye"></i> View Records</button>
                                                     </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                             </table>
                                             <p>
-                                                Showing {{$medicines->firstItem()}} to {{$medicines->lastItem()}} out of {{$medicines->total()}} items.
+                                                Showing {{$patients->firstItem()}} to {{$patients->lastItem()}} out of {{$patients->total()}} items.
                                             </p>
-                                            {{ $medicines->links() }}
+                                            {{ $patients->links() }}
                                         </div>
                                     </div>
                                 </div>

@@ -14,4 +14,8 @@ class Designation extends Model
     {
         return $this->hasMany(HealthProfile::class);
     }
+    public function patients()
+    {
+        return $this->hasMany(Patient::class);
+    }
 }

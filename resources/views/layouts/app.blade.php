@@ -10,8 +10,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>{{ config('app.name', 'Registrar Office') }}</title>
-  <link rel="icon" href="{{ asset('dist/img/psu_logo.png') }}" type="image/x-icon">
+  <title>{{ config('app.name', 'Clinic Office') }}</title>
+  <link rel="icon" href="{{ asset('dist/img/psu.png') }}" type="image/x-icon">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
@@ -20,6 +20,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <style>
+        .colored-toast.swal2-icon-success {
+            background-color: #a5dc86 !important;
+        }
+
+        .colored-toast.swal2-icon-error {
+            background-color: #f27474 !important;
+        }
+
+        .colored-toast.swal2-icon-warning {
+            background-color: #f8bb86 !important;
+        }
+
+        .colored-toast.swal2-icon-info {
+            background-color: #3fc3ee !important;
+        }
+        .colored-toast .swal2-title {
+            color: white;
+        }
+
+        .colored-toast .swal2-close {
+            color: white;
+        }
+
+        .colored-toast .swal2-html-container {
+            color: white;
+        }
+
+  </style>
   @stack('css')
   @livewireStyles
 </head>
@@ -80,6 +109,10 @@ aria-hidden="true">
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast'
+        },
         showConfirmButton: false,
         showCloseButton: true,
         timer: 5000,
@@ -171,6 +204,30 @@ aria-hidden="true">
                 const claimedBy = Swal.getHtmlContainer().querySelector('#stock')
                 // console.log(appeals.value, remarks.value)
                 Livewire.emit('addStockConfirmed', stock.value, event.detail.id)
+            }
+        })
+    })
+    window.addEventListener('swal:removeStock', event => {
+        Swal.fire({
+            title: event.detail.title,
+            text: event.detail.text,
+            icon: event.detail.type,
+            id: event.detail.id,
+            html: `
+                <input
+                type="number"
+                value=""
+                class="form-control mb-2"
+                placeholder="Quantity"
+                id="stock">`,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+            if (result.isConfirmed) {
+                const claimedBy = Swal.getHtmlContainer().querySelector('#stock')
+                // console.log(appeals.value, remarks.value)
+                Livewire.emit('removeStockConfirmed', stock.value, event.detail.id)
             }
         })
     })
