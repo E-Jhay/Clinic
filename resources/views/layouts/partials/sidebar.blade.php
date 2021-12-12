@@ -78,7 +78,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('medicine-monthly-report')}}" class="nav-link">
+                <a href="{{route('medicine-report')}}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
                     Medicine Reports

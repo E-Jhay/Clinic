@@ -10,9 +10,10 @@ use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 
-class MedicineMonthly extends Component
+class MedicineReport extends Component
 {
     public $month, $year;
+    public $option = 1;
 
     public function mount()
     {
@@ -23,7 +24,7 @@ class MedicineMonthly extends Component
 
     public function render()
     {
-        return view('livewire.medicine-monthly', [
+        return view('livewire.medicine-report', [
             'designations'  =>  $this->designations,
             'report'        =>  $this->report,
             'totalCountPerDesignation'        =>  $this->totalCountPerDesignation,
@@ -64,9 +65,9 @@ class MedicineMonthly extends Component
         // dd($query);
     }
 
-    public function sample()
+    public function changeOption($option)
     {
-        dd($this->report);
+        $this->option = $option;
     }
 
     public function getDesignationsProperty()

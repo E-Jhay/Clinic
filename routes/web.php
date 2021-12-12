@@ -30,7 +30,7 @@ Route::get('/patient-record/{name}/{designation_id}/', function ($name, $from_de
     return view('medical-records.view-patient', compact('name', 'from_designation_id'));
 })->name('patient-record');
 
-Route::view('/medicine-monthly-report', 'medicine-reports.monthly')->name('medicine-monthly-report');
+Route::view('/medicine-report', 'medicine-reports.medicine-report')->name('medicine-report');
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
