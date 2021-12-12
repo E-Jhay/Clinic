@@ -24,11 +24,13 @@ Route::view('/supply', 'inventory.supply')->name('supply');
 Route::view('/equipment', 'inventory.equipment')->name('equipment');
 Route::view('/daily-treatment-record', 'medical-records.daily-treatment-record')->name('daily-treatment-record');
 Route::view('/patient-records', 'medical-records.patient-crud')->name('patient-records');
-Route::view('/patient-record/{name}', 'medical-records.view-patient')->name('patient-record');
-Route::get('/patient-record/{name}', function ($name){
+// Route::view('/patient-record/{name}', 'medical-records.view-patient')->name('patient-record');
+Route::get('/patient-record/{name}/{designation_id}/', function ($name, $from_designation_id){
     // $patientRecords = Patient::where('name', $name)->get();
-    return view('medical-records.view-patient', compact('name'));
+    return view('medical-records.view-patient', compact('name', 'from_designation_id'));
 })->name('patient-record');
+
+Route::view('/medicine-monthly-report', 'medicine-reports.monthly')->name('medicine-monthly-report');
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

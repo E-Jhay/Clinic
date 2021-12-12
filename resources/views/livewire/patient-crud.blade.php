@@ -16,8 +16,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1 class="m-0 d-inline">Patient</h1>
-                    <button wire:click="create()" class="d-inline btn btn-primary float-right">Insert DTR</button>
+                    <h1 class="m-0 d-inline">{{$titlePage}}</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -73,6 +72,7 @@
                                                     <th>Name</th>
                                                     <th>Diagnosis</th>
                                                     <th>Designation</th>
+                                                    <th>Course</th>
                                                     <th style="width: 150px" class="text-center">Action</th>
                                                 </tr>
                                             </thead>
@@ -82,8 +82,9 @@
                                                     <td>{{ucfirst($patient->name)." ".$patient->id}}</td>
                                                     <td>{{ucfirst($patient->diagnosis)}}</td>
                                                     <td>{{$patient->designation->name}}</td>
+                                                    <td>{{$patient->course->name}}</td>
                                                     <td class="text-center">
-                                                        <button class="btn btn-success btn-sm" wire:click="viewRecords('{{$patient->name}}')"><i class="fas fa-eye"></i> View Records</button>
+                                                        <button class="btn btn-success btn-sm" wire:click="viewRecords('{{$patient->name}}', {{$patient->designation_id}})"><i class="fas fa-eye"></i> View Records</button>
                                                     </td>
                                                 </tr>
                                                 @endforeach

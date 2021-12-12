@@ -107,6 +107,7 @@
                                                     <th>Name</th>
                                                     <th>Address</th>
                                                     <th>Designation</th>
+                                                    <th>Course</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -117,6 +118,7 @@
                                                     <td>{{$healthProfile->name}}</td>
                                                     <td>{{$healthProfile->address}}</td>
                                                     <td>{{$healthProfile->designation->name}}</td>
+                                                    <td>{{$healthProfile->course->name}}</td>
                                                     <td class="text-center">
                                                         <button class="btn btn-success" wire:click="edit({{$healthProfile->id}})"><i class="fas fa-eye"></i> View</button>
                                                     </td>

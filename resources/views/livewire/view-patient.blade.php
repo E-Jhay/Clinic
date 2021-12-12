@@ -16,12 +16,12 @@
         <div class="container-fluid">
             <div class="row mb-3">
                 <div class="col-sm-12">
-                    <h1 class="m-0 d-inline">{{ucfirst($name)}}'s DTR</h1>
+                    <h1 class="m-0 d-inline">{{ucfirst($titleName)}}'s DTR</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{{url()->previous()}}" class="btn btn-secondary">Go Back</a>
+                    <a href="{{route('patient-records')}}" class="btn btn-secondary">Go Back</a>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -31,6 +31,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+            <div class="row">
+                @if($isOpen)
+                    @include('livewire.view-patient-create')
+                @endif
+            </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
@@ -77,6 +82,7 @@
                                                     <th>Name</th>
                                                     <th>Diagnosis</th>
                                                     <th>Designation</th>
+                                                    <th>Date</th>
                                                     <th style="width: 150px" class="text-center">Action</th>
                                                 </tr>
                                             </thead>
@@ -86,6 +92,7 @@
                                                     <td>{{ucfirst($patientRecord->name)." ".$patientRecord->id}}</td>
                                                     <td>{{ucfirst($patientRecord->diagnosis)}}</td>
                                                     <td>{{$patientRecord->designation->name}}</td>
+                                                    <td>{{$patientRecord->created_at}}</td>
                                                     <td class="text-center">
                                                         <button class="btn btn-warning btn-sm" wire:click="edit({{$patientRecord->id}})"><i class="fas fa-eye"></i> Edit</button>
                                                     </td>

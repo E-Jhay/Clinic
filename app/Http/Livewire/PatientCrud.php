@@ -16,6 +16,7 @@ class PatientCrud extends Component
     public $isOpen = 0;
     public $searchTerm;
     public $sortDesignation;
+    public $titlePage = "Patient Records";
     public $sortBy = 'created_at';
     public $sortDirection = 'asc';
     public $perPage = 10;
@@ -42,7 +43,8 @@ class PatientCrud extends Component
         return Patient::select('id',
                 'name',
                 'diagnosis',
-                'designation_id', 
+                'designation_id',
+                'course_id',
             )
             ->when($sortDesignation, function($q) use ($sortDesignation, $searchTerm){
                 $q->where('designation_id', $sortDesignation)
@@ -55,16 +57,27 @@ class PatientCrud extends Component
                     $q->where('name', 'like', $searchTerm);
                 })
             ->groupBy('name')
+            ->groupBy('designation_id')
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate($this->perPage);
     }
 
-    public function viewRecords($name)
+    public function viewRecords($name, $designation_id)
     {
         $patientRecords = Patient::where('name', $name);
-        return redirect()->to('/patient-record/'.$name);
+        return redirect()->to('/patient-record/'.$name.'/'.$designation_id);
     }
 
+    public function updatedSortDesignation()
+    {
+        $fetchDesignations = Designation::select('id', 'name')->get();
+        foreach($fetchDesignations as $fetchDesignation){
+            if($this->sortDesignation == $fetchDesignation['id'])
+                $this->titlePage = $fetchDesignation['name'] ." Patient Records";
+            elseif($this->sortDesignation == '')
+                $this->titlePage = "Patient Records";
+        }
+    }
     // public function addStock($id)
     // {
     //     $this->dispatchBrowserEvent('swal:addStock',[

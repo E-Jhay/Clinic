@@ -79,6 +79,7 @@
                           <option value="single">Single</option>
                           <option value="married">Married</option>
                           <option value="widowed">Widowed</option>
+                          <option value="kabit">Kabit</option>
                       </select>
                       @error('civil_status')
                         <div class="text-danger">
@@ -106,6 +107,20 @@
                           @endforeach
                       </select>
                       @error('designation_id')
+                        <div class="text-danger">
+                            {{$message}}
+                        </div>
+                      @enderror
+                  </div>
+                  <div class="col-md-3">
+                      <label for="course_id">Course</label>
+                      <select class="custom-select d-block w-100" wire:model.lazy="course_id" id="course_id" >
+                          <option value="">Select Course</option>
+                          @foreach ($courses as $course)
+                              <option value="{{$course->id}}">{{$course->name}}</option>
+                          @endforeach
+                      </select>
+                      @error('course_id')
                         <div class="text-danger">
                             {{$message}}
                         </div>

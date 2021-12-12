@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePatientsTable extends Migration
+class CreateReleasedMedicinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreatePatientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('patients', function (Blueprint $table) {
+        Schema::create('released_medicines', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('course_id')->constrained();
             $table->foreignId('designation_id')->constrained();
-            $table->foreignId('course_id')->constrained()->nullable();
-            $table->string('complaints');
-            $table->string('diagnosis');
-            $table->string('medical_service');
-            $table->string('medicines_given');
+            $table->string('medicine_name')->constrained();
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ class CreatePatientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('patients');
+        Schema::dropIfExists('released_medicines');
     }
 }

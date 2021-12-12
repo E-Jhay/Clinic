@@ -6,7 +6,7 @@
         <div class="card-body" style="padding-inline: 14rem">
             <form wire:submit.prevent="store()">
                 <div class="row mb-3">
-                  <div class="col-md-6">
+                  <div class="col-md-7">
                     <label for="name">Medicine Name</label>
                     <input type="text" class="form-control" wire:model.lazy="name" id="name" placeholder="" value="" >
                     @error('name')
@@ -15,7 +15,7 @@
                       </div>
                     @enderror
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-5">
                     <label>Quantity</label>
                       <input type="number" wire:model.lazy="stock" class="form-control" value="{{old('stock')}}">
                     @error('stock')
@@ -26,7 +26,7 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-10">
+                    <div class="col-sm-12">
                         <!-- textarea -->
                         <div class="form-group">
                             <label>Description</label>

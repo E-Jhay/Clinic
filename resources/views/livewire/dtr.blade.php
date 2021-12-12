@@ -16,7 +16,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1 class="m-0 d-inline">Daily Treatment Record</h1>
+                    <h1 class="m-0 d-inline">Daily Treatment Record Form</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -35,7 +35,7 @@
                         <div class="card-body" style="padding-inline: 14rem">
                             <form wire:submit.prevent="store()">
                                 <div class="row mb-3">
-                                  <div class="col-md-7">
+                                  <div class="col-md-6">
                                     <label for="name">Full Name</label>
                                     <input type="text" class="form-control" wire:model.lazy="name" id="name" placeholder="" value="" >
                                     @error('name')
@@ -44,7 +44,7 @@
                                       </div>
                                     @enderror
                                   </div>
-                                  <div class="col-md-5">
+                                  <div class="col-md-3">
                                     <label for="designation_id">Designation</label>
                                     <select class="custom-select d-block w-100" wire:model.lazy="designation_id" id="designation_id" >
                                         <option value="">Select Designation</option>
@@ -53,6 +53,20 @@
                                         @endforeach
                                     </select>
                                     @error('designation_id')
+                                        <div class="text-danger">
+                                            {{$message}}
+                                        </div>
+                                    @enderror
+                                  </div>
+                                  <div class="col-md-3">
+                                    <label for="course_id">Designation</label>
+                                    <select class="custom-select d-block w-100" wire:model.lazy="course_id" id="designation_id" >
+                                        <option value="">Select Course</option>
+                                        @foreach ($courses as $course)
+                                            <option value="{{$course->id}}">{{$course->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('course_id')
                                         <div class="text-danger">
                                             {{$message}}
                                         </div>

@@ -28,10 +28,17 @@ class HealthProfile extends Model
         'pulse',
         'blood_pressure',
         'designation_id',
+        'course_id',
     ];
 
     public function designation()
     {
         return $this->hasOne(Designation::class, 'id', 'designation_id');
     }
+
+    public function course()
+    {
+        return $this->hasOne(Course::class, 'id', 'course_id');
+    }
+
 }

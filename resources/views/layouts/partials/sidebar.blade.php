@@ -53,7 +53,7 @@
                 <a href="{{ route('daily-treatment-record') }}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
-                    Daily Time Record
+                    DTR Form
                   </p>
                 </a>
               </li>
@@ -78,10 +78,10 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('medicine-monthly-report')}}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
-                    Monthly Report
+                    Medicine Reports
                   </p>
                 </a>
               </li>

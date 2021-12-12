@@ -33,6 +33,7 @@ class CreateHealthProfilesTable extends Migration
             $table->string('pulse')->nullable();
             $table->string('blood_pressure')->nullable();
             $table->foreignId('designation_id')->constrained();
+            $table->foreignId('course_id')->constrained()->nullable();
             $table->timestamps();
         });
     }

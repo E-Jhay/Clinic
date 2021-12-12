@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Course;
 use App\Models\Designation;
 use App\Models\HealthProfile;
 use Livewire\WithPagination;
@@ -22,7 +23,7 @@ class HealthProfileCrud extends Component
     public $designationStatus = "";
     public $isOpen = 0;
     public $healthProfileId;
-    public $name, $mobile_no, $age, $sex, $civil_status, $birthday, $address, $contact_person, $symptoms, $illness, $hospitalization, $allergies, $ps_history, $ob_history, $temperature, $pulse, $blood_pressure, $designation_id;
+    public $name, $mobile_no, $age, $sex, $civil_status, $birthday, $address, $contact_person, $symptoms, $illness, $hospitalization, $allergies, $ps_history, $ob_history, $temperature, $pulse, $blood_pressure, $designation_id, $course_id;
 
 
     public function render()
@@ -30,6 +31,7 @@ class HealthProfileCrud extends Component
         return view('livewire.health-profile-crud', [
             'healthProfiles'    =>  $this->healthProfile,
             'designations'      =>  Designation::all(),
+            'courses'           =>  Course::all(),
         ]);
     }
 
@@ -75,6 +77,7 @@ class HealthProfileCrud extends Component
         $this->pulse    = '';
         $this->blood_pressure   = '';
         $this->designation_id   = '';
+        $this->course_id   = '';
     }
 
 
@@ -104,6 +107,10 @@ class HealthProfileCrud extends Component
         // dd($this);
         
         try{
+            if($this->designation_id != 1)
+            {
+                $this->course_id = 7;
+            }
             HealthProfile::updateOrCreate(['id' => $this->healthProfileId], [
                 'name'              =>      $this->name,
                 'mobile_no'         =>      $this->mobile_no,
@@ -123,6 +130,7 @@ class HealthProfileCrud extends Component
                 'pulse'             =>      $this->pulse,
                 'blood_pressure'    =>      $this->blood_pressure,
                 'designation_id'    =>      $this->designation_id,
+                'course_id'         =>      $this->course_id,
             ]);
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
@@ -161,6 +169,7 @@ class HealthProfileCrud extends Component
         $this->pulse                = $healthProfile->pulse;
         $this->blood_pressure       = $healthProfile->blood_pressure;
         $this->designation_id       = $healthProfile->designation_id;
+        $this->course_id       = $healthProfile->course_id;
         $this->healthProfileId      = $id;
         $this->emit('gotoTop');
         $this->openModal();
@@ -171,7 +180,7 @@ class HealthProfileCrud extends Component
         $searchTerm = '%'.$this->searchTerm.'%';
         $sortDesignation = $this->sortDesignation;
         return HealthProfile::with('designation')
-            ->select('id', 'name', 'address', 'designation_id')
+            ->select('id', 'name', 'address', 'designation_id', 'course_id')
             // ->where('designation_id', 3)
             // ->when($sortDesignation, function ($q) use ($sortDesignation) {
             //     $q->where('designation_id', $sortDesignation);
