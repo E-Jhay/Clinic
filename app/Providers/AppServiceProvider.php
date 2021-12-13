@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $charts->register([
             \App\Charts\MonthlyIllness::class,
+            \App\Charts\TopComplaints::class,
         ]);
     }
 }

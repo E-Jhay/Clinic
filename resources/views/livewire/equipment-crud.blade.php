@@ -1,15 +1,3 @@
-@push('css')
-<style>
-    .nav-tabs .nav-link{
-        color: #000;
-    }
-    .nav-tabs .nav-link.active{
-        color: #fff;
-        background-color: #278af5;
-        border-color: trasparent;
-    }
-</style>
-@endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -76,7 +64,7 @@
                                             <tbody>
                                                 @foreach ($equipments as $equipment)
                                                 <tr>
-                                                    <td>{{ucfirst($equipment->name)." ".$equipment->id}}</td>
+                                                    <td>{{ucfirst($equipment->name)}}</td>
                                                     <td>{{$equipment->description}}</td>
                                                     @if ($equipment->total <= 0)
                                                         <td>

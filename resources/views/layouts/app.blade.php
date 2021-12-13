@@ -48,6 +48,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
             color: white;
         }
 
+        
+
+    /* [class*=sidebar-light-]{
+        background-color: #0a28d8;
+        color: #fff;
+    }
+    .mt-2 .nav .nav-item .nav-link{
+        color: #fff;
+    }
+    .mt-2 .nav .nav-item .nav-link:hover{
+        color: #007bff;
+    } */
+
   </style>
   @stack('css')
   @livewireStyles

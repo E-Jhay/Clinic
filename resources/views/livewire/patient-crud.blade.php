@@ -79,7 +79,7 @@
                                             <tbody>
                                                 @foreach ($patients as $patient)
                                                 <tr>
-                                                    <td>{{ucfirst($patient->name)." ".$patient->id}}</td>
+                                                    <td>{{ucfirst($patient->name)}}</td>
                                                     <td>{{ucfirst($patient->diagnosis)}}</td>
                                                     <td>{{$patient->designation->name}}</td>
                                                     <td>{{$patient->course->name}}</td>

@@ -95,16 +95,16 @@
                   </div>
               </div>
           </div>
-          {{-- <div class="col-4">
+          <div class="col-12 col-sm-3 col-md-4">
               <div class="card">
                   <div class="card-header">
-                      <div class="card-title">Request Statuses</div>
+                      <div class="card-title">Top 5 Complaints This Month</div>
                   </div>
                   <div class="card-body">
-                      <div id="pieChart" style="height: 23rem;" ></div>
+                      <div id="topComplaints" style="height: 23rem;" ></div>
                   </div>
               </div>
-          </div> --}}
+          </div>
             <!-- /.col -->
         </div>
           <!-- /.row -->
@@ -117,7 +117,17 @@
       el: '#monthlyIllness',
       url: "@chart('monthly_illness')",
       hooks: new ChartisanHooks()
-        .colors(['#17a2b8'])
+    .beginAtZero()
+    .borderColors(['#17a2b8'])
+    .datasets([{ type: 'line', fill: false }, 'bar']),
+    });
+
+    const Piechart = new Chartisan({
+      el: '#topComplaints',
+      url: "@chart('top_complaints')",
+      hooks: new ChartisanHooks()
+        .datasets('doughnut')
+        .pieColors(['#dc3545', '#007bff', '#28a745', '#ffc107', '#17a2b8'])
     });
 </script>
 @endpush
