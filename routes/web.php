@@ -34,6 +34,9 @@ Route::view('/medicine-monthly-report', 'medicine-reports.medicine-monthly-repor
 Route::view('/medicine-quarterly-report', 'medicine-reports.medicine-quarterly-report')->name('medicine-quarterly-report');
 Route::view('/medicine-anually-report', 'medicine-reports.medicine-anually-report')->name('medicine-anually-report');
 
+Route::view('/medical-services-monthly-report', 'medical-services-reports.medical-services-monthly-report')->name('medical-services-monthly-report');
+Route::view('/medical-services-quarterly-report', 'medical-services-reports.medical-services-quarterly-report')->name('medical-services-quarterly-report');
+
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

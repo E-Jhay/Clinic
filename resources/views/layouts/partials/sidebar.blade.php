@@ -86,10 +86,10 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('medicine-quarterly-report')}}" class="nav-link">
+                <a href="{{route('medical-services-monthly-report')}}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
-                    Quarterly Report
+                    Medical Services
                   </p>
                 </a>
               </li>
