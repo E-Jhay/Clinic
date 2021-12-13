@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <h1>Anually Reports</h1>
+        <h1>Medicine Given Anually Reports</h1>
         <div class="d-flex">
           <div class="input-group mt-2">
             <div class="input-group-prepend">

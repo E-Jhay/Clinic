@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <h1>Medicine Given Monthly Reports</h1>
+        <h1>Medical Illness Monthly Reports</h1>
         <div class="d-flex">
           <div class="input-group mt-2">
             <div class="input-group-prepend">
@@ -16,13 +16,13 @@
           </div>
           <div class="btn-group float-right">
             <button class="btn btn-primary active">
-              <a class="text-white" href="{{route('medicine-monthly-report')}}">Monthly</a>
+              <a class="text-white" href="{{route('medical-illness-monthly-report')}}">Monthly</a>
             </button>
             <button class="btn btn-primary">
-              <a class="text-white" href="{{route('medicine-quarterly-report')}}">Quarterly</a>
+              <a class="text-white" href="{{route('medical-illness-quarterly-report')}}">Quarterly</a>
             </button>
             <button class="btn btn-primary">
-              <a class="text-white" href="{{route('medicine-anually-report')}}">Anually</a>
+              <a class="text-white" href="{{route('medical-illness-anually-report')}}">Anually</a>
             </button>
           </div>
         </div>
@@ -86,24 +86,24 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Medicines Given</th>
+                            <th>Medical Illness/Disease</th>
                             @foreach ($designations as $designation)
                                 <th class="text-center">{{$designation->name}}</th>
                             @endforeach
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($report as $medicine_name => $values)
+                        @foreach ($report as $medicalIllness => $values)
                             <tr>
-                                <td>{{ucfirst($medicine_name)}}</td>
+                                <td>{{ucfirst($medicalIllness)}}</td>
                                 @foreach ($designations as $designation)
-                                    <td class="text-center">{{$report[$medicine_name][$designation->id]['count'] ?? '0'}}</td>
+                                    <td class="text-center">{{$report[$medicalIllness][$designation->id]['count'] ?? '0'}}</td>
                                 @endforeach
                                 {{-- <td class="text-center">{{$totalCountPerDocs[$document] ?? '0'}}</td> --}}
                             </tr>
                         @endforeach
                         <tr>
-                            <td><strong>No. of Medicines Given</strong></td>
+                            <td><strong>No. of Cases</strong></td>
                             @foreach ($designations as $designation)
                                 <td class="text-center">{{$totalCountPerDesignation[$designation->id] ?? '0'}}</td>
                             @endforeach
@@ -114,7 +114,7 @@
                             <td class="text-center">{{$totalCount}}</td> --}}
                         </tr>
                         <tr>
-                            <td><strong>Total No. of Medicine</strong></td>
+                            <td><strong>Total No. of Cases</strong></td>
                             <td class="text-center">{{$totalCount}}</td>
                         </tr>
                     </tbody>

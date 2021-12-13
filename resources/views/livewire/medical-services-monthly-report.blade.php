@@ -21,9 +21,9 @@
             <button class="btn btn-primary">
               <a class="text-white" href="{{route('medical-services-quarterly-report')}}">Quarterly</a>
             </button>
-            {{-- <button class="btn btn-primary">
+            <button class="btn btn-primary">
               <a class="text-white" href="{{route('medical-services-anually-report')}}">Anually</a>
-            </button> --}}
+            </button>
           </div>
         </div>
           <div class="input-group mt-2">

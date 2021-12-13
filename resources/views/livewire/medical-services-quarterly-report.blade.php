@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <h1>Quarterly Reports</h1>
+        <h1>Medical Services Quarterly Reports</h1>
         <div class="d-flex">
           <div class="input-group mt-2">
             <div class="input-group-prepend">
@@ -21,9 +21,9 @@
             <button class="btn btn-primary active">
               <a class="text-white" href="{{route('medical-services-quarterly-report')}}">Quarterly</a>
             </button>
-            {{-- <button class="btn btn-primary">
+            <button class="btn btn-primary">
               <a class="text-white" href="{{route('medical-services-anually-report')}}">Anually</a>
-            </button> --}}
+            </button>
           </div>
         </div>
         <div class="input-group mt-2">
@@ -78,11 +78,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($report as $medical_service => $values)
+                        @foreach ($report as $medicalService => $values)
                             <tr>
-                                <td>{{ucfirst($medical_service)}}</td>
+                                <td>{{ucfirst($medicalService)}}</td>
                                 @foreach ($designations as $designation)
-                                    <td class="text-center">{{$report[$medical_service][$designation->id]['count'] ?? '0'}}</td>
+                                    <td class="text-center">{{$report[$medicalService][$designation->id]['count'] ?? '0'}}</td>
                                 @endforeach
                                 {{-- <td class="text-center">{{$totalCountPerDocs[$document] ?? '0'}}</td> --}}
                             </tr>

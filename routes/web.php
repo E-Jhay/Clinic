@@ -36,6 +36,11 @@ Route::view('/medicine-anually-report', 'medicine-reports.medicine-anually-repor
 
 Route::view('/medical-services-monthly-report', 'medical-services-reports.medical-services-monthly-report')->name('medical-services-monthly-report');
 Route::view('/medical-services-quarterly-report', 'medical-services-reports.medical-services-quarterly-report')->name('medical-services-quarterly-report');
+Route::view('/medical-services-anually-report', 'medical-services-reports.medical-services-anually-report')->name('medical-services-anually-report');
+
+Route::view('/medical-illness-monthly-report', 'medical-illness-reports.medical-illness-monthly-report')->name('medical-illness-monthly-report');
+Route::view('/medical-illness-quarterly-report', 'medical-illness-reports.medical-illness-quarterly-report')->name('medical-illness-quarterly-report');
+Route::view('/medical-illness-anually-report', 'medical-illness-reports.medical-illness-anually-report')->name('medical-illness-anually-report');
 
 Auth::routes();
 

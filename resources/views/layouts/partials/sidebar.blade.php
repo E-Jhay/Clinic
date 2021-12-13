@@ -94,10 +94,10 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('medicine-anually-report')}}" class="nav-link">
+                <a href="{{route('medical-illness-monthly-report')}}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
-                    Anually Report
+                    Medical Illness
                   </p>
                 </a>
               </li>
