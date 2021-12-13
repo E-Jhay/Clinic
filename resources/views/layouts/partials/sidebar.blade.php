@@ -78,7 +78,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('medicine-report')}}" class="nav-link">
+                <a href="{{route('medicine-monthly-report')}}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
                     Medicine Reports
@@ -86,7 +86,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('medicine-quarterly-report')}}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
                     Quarterly Report
@@ -94,7 +94,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{route('medicine-anually-report')}}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
                     Anually Report

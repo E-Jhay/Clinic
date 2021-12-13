@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
 
-class MedicineExport implements FromView, ShouldAutoSize, WithEvents
+class MedicineMonthlyExport implements FromView, ShouldAutoSize, WithEvents
 {
 
     private $report, $designations, $totalCountPerDesignation, $totalCount, $month, $year;
@@ -25,7 +25,7 @@ class MedicineExport implements FromView, ShouldAutoSize, WithEvents
 
     public function view(): View
     {
-        return view('exports.medicine', [
+        return view('exports.medicine-monthly', [
             'report' => $this->report,
             'designations' => $this->designations,
             'totalCountPerDesignation' => $this->totalCountPerDesignation,

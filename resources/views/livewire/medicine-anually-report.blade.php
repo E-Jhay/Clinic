@@ -6,7 +6,7 @@
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
-        <h1>Monthly Reports</h1>
+        <h1>Anually Reports</h1>
         <div class="d-flex">
           <div class="input-group mt-2">
             <div class="input-group-prepend">
@@ -15,48 +15,21 @@
             <input type="number" class="form-control col-sm-2" wire:model="year" placeholder="YYYY" min="2020" max="2100">
           </div>
           <div class="btn-group float-right">
-            <button class="btn btn-primary active">
+            <button class="btn btn-primary">
               <a class="text-white" href="{{route('medicine-monthly-report')}}">Monthly</a>
             </button>
             <button class="btn btn-primary">
               <a class="text-white" href="{{route('medicine-quarterly-report')}}">Quarterly</a>
             </button>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary active">
               <a class="text-white" href="{{route('medicine-anually-report')}}">Anually</a>
             </button>
           </div>
         </div>
-          <div class="input-group mt-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text">Month</div>
-            </div>
-            <select class="form-control custom-select col-sm-2" wire:model="month">
-              <option value="" disabled>Select Month</option>
-              <option value="01">January</option>
-              <option value="02">February</option>
-              <option value="03">March</option>
-              <option value="04">April</option>
-              <option value="05">May</option>
-              <option value="06">June</option>
-              <option value="07">July</option>
-              <option value="08">August</option>
-              <option value="09">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
-            </select>
-          </div>
       </div><!-- /.container-fluid -->
     </div>
       <!-- /.content-header -->
-  {{-- @if ($option == 1)
-      @include('livewire.medicine-monthly-report')
-  @endif
-  @if($option == 2)
-    @include('livewire.medicine-quarterly-report')
-  @endif --}}
-
-  
+      
   <section class="content">
     <div class="container-fluid">
         <!-- Main content -->
@@ -76,7 +49,7 @@
                 <h5>
                   MEDICAL-DENTAL UNIT
                 </h5>
-                <h5>{{\Carbon\Carbon::createFromFormat('m', $month)->format('F')." ". $year}}</h5>
+                <h5>{{"Year ". $year}}</h5>
               </div>
               <!-- /.col -->
             </div>
