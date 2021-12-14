@@ -3,7 +3,7 @@
         <div class="card-header">
             <h3 class="card-title">Edit Daily Treatment Record</h3>
         </div>
-        <div class="card-body" style="padding-inline: 14rem">
+        <div class="card-body">
             <form wire:submit.prevent="update()">
                 <div class="row mb-3">
                   <div class="col-md-7">

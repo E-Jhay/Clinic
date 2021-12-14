@@ -57,8 +57,8 @@
                                                 <tr>
                                                     <th>Name</th>
                                                     <th>Description</th>
-                                                    <th style="width: 120px">Stock</th>
-                                                    <th style="width: 300px" class="text-center">Action</th>
+                                                    <th style="width: 6rem">Stock</th>
+                                                    <th style="width: 16rem" class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
