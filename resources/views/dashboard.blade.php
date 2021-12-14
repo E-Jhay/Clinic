@@ -61,7 +61,7 @@
         
                     <div class="info-box-content">
                         <span class="info-box-text">Mostly Admitted</span>
-                        <span class="info-box-number">{{$mostlyAdmitted[0]['designation']['name']}}</span>
+                        <span class="info-box-number">{{$mostlyAdmitted ? $mostlyAdmitted[0]['designation']['name'] : 'No data'}}</span>
                         <span class="info-box-text">By Designation</span>
                     </div>
                     <!-- /.info-box-content -->
