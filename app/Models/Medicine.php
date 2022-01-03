@@ -9,5 +9,5 @@ class Medicine extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'stock'];
+    protected $fillable = ['name', 'description', 'stock', 'code', 'expiration_day'];
 }

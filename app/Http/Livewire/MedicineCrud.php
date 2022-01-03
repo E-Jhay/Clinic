@@ -17,7 +17,7 @@ class MedicineCrud extends Component
     public $sortBy = 'created_at';
     public $sortDirection = 'asc';
     public $perPage = 10;
-    public $name, $stock, $description;
+    public $name, $stock, $description, $expiration_date;
 
     protected $listeners = [
         'addStockConfirmed' => 'addStockConfirmed',
@@ -64,6 +64,7 @@ class MedicineCrud extends Component
         $this->name = '';
         $this->stock ='';
         $this->description ='';
+        $this->expiration_date ='';
     }
 
     public function store()
@@ -72,25 +73,36 @@ class MedicineCrud extends Component
             'name'  =>  'required',
             'stock'  =>  ['required', 'gt:0'],
             'description'  =>  ['string'],
+            'expiration_date'  =>  ['required', 'date', 'after:today'],
         ]);
         
         try{
-            $existingMedicine = Medicine::where('name', strtolower($this->name))->first();
-            if($existingMedicine){
-                $existingMedicine->update([
-                    'name'  =>  strtolower($this->name),
-                    'stock'  =>  $existingMedicine->stock + $this->stock,
-                    'description'  =>  $this->description,
-                ]);
-            }
-            else{
-                Medicine::create([
-                    'name'  =>  strtolower($this->name),
-                    'stock'  =>  $this->stock,
-                    'description'  =>  $this->description,
-                ]);
-            }
-
+            // $existingMedicine = Medicine::where('name', strtolower($this->name))->first();
+            // if($existingMedicine){
+            //     $existingMedicine->update([
+            //         'name'  =>  strtolower($this->name),
+            //         'code'  =>  preg_replace('/\s+/', '', $this->name),
+            //         'stock'  =>  $existingMedicine->stock + $this->stock,
+            //         'description'  =>  $this->description,
+            //         'expiration_day'  =>  $this->expiration_date,
+            //     ]);
+            // }
+            // else{
+            //     Medicine::create([
+            //         'name'  =>  strtolower($this->name),
+            //         'code'  =>  preg_replace('/\s+/', '', $this->name),
+            //         'stock'  =>  $this->stock,
+            //         'description'  =>  $this->description,
+            //         'expiration_day'  =>  $this->expiration_date,
+            //     ]);
+            // }
+            Medicine::create([
+                'name'  =>  strtolower($this->name),
+                'code'  =>  strtolower(preg_replace('/\s+/', '', $this->name)),
+                'stock'  =>  $this->stock,
+                'description'  =>  $this->description,
+                'expiration_day'  =>  $this->expiration_date,
+            ]);
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'success',
                 'message'=>'New Medicine Added'

@@ -62,9 +62,9 @@ class Dtr extends Component
                 ]);
     
                 // dd($this);
-                $medicine_given_lists = explode(", ", $this->medicines_given);
+                $medicine_given_lists = explode(",", preg_replace('/\s+/', '', $this->medicines_given));
                 foreach($medicine_given_lists as $medicine_given_list){
-                    $existingMedicine = Medicine::where('name', 'like', '%'.$medicine_given_list.'%')->first();
+                    $existingMedicine = Medicine::where('code', 'like', '%'.$medicine_given_list.'%')->first();
                     ReleasedMedicine::create([
                         'medicine_name'              =>      strtolower($medicine_given_list),
                         'designation_id'    =>      $this->designation_id,

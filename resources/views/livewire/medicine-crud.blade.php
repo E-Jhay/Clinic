@@ -65,7 +65,7 @@
                                                 @foreach ($medicines as $medicine)
                                                 <tr>
                                                     <td>{{ucfirst($medicine->name)}}</td>
-                                                    <td>{{$medicine->description}}</td>
+                                                    <td>{{ucfirst($medicine->description)}}</td>
                                                     @if ($medicine->total <= 0)
                                                         <td>
                                                             <div class="bg-danger rounded px-1">Out of Stock</div>

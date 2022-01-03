@@ -26,6 +26,17 @@
                   </div>
                 </div>
                 <div class="row mb-3">
+                  <div class="col-md-7">
+                    <label for="name">Expiration Date</label>
+                    <input type="date" class="form-control" wire:model.lazy="expiration_date" id="expiration_date" placeholder="" value="" >
+                    @error('expiration_date')
+                      <div class="text-danger">
+                          {{$message}}
+                      </div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-sm-12">
                         <!-- textarea -->
                         <div class="form-group">
