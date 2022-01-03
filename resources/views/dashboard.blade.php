@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box">
-                      <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+                      <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user-injured"></i></span>
         
                       <div class="info-box-content">
                         <span class="info-box-text">No. of Patient</span>
@@ -39,7 +39,7 @@
                 <!-- ./col -->
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
-                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-prescription"></i></span>
         
                     <div class="info-box-content">
                         <span class="info-box-text">Medicines Given</span>
@@ -57,11 +57,11 @@
         
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
-                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user"></i></span>
         
                     <div class="info-box-content">
                         <span class="info-box-text">Mostly Admitted</span>
-                        <span class="info-box-number">{{$mostlyAdmitted[0]['designation']['name']}}</span>
+                        <span class="info-box-number">{{$mostlyAdmitted ? $mostlyAdmitted[0]['designation']['name'] : 'No data'}}</span>
                         <span class="info-box-text">By Designation</span>
                     </div>
                     <!-- /.info-box-content -->

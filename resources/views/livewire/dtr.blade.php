@@ -107,7 +107,7 @@
                                     <div class="col-sm-12">
                                         <!-- textarea -->
                                         <div class="form-group">
-                                            <label>Medicines Given</label>
+                                            <label>Medicines Given <span class="text-muted">Separated by ", "</span></label>
                                             <textarea class="form-control" wire:model.lazy="medicines_given" rows="3" placeholder="Medicines ..."></textarea>
                                         </div>
                                     </div>

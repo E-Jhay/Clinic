@@ -43,7 +43,6 @@ class Dtr extends Component
             'complaints'        =>  'required',
             'diagnosis'         =>  'required',
             'medical_service'   =>  'required',
-            'medicines_given'   =>  'required',
         ]);
             
         try{
@@ -63,7 +62,7 @@ class Dtr extends Component
                 ]);
     
                 // dd($this);
-                $medicine_given_lists = explode(",", preg_replace('/\s+/', '', $this->medicines_given));
+                $medicine_given_lists = explode(", ", $this->medicines_given);
                 foreach($medicine_given_lists as $medicine_given_list){
                     $existingMedicine = Medicine::where('name', 'like', '%'.$medicine_given_list.'%')->first();
                     ReleasedMedicine::create([

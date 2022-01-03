@@ -79,7 +79,6 @@
                           <option value="single">Single</option>
                           <option value="married">Married</option>
                           <option value="widowed">Widowed</option>
-                          <option value="kabit">Kabit</option>
                       </select>
                       @error('civil_status')
                         <div class="text-danger">

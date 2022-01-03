@@ -70,7 +70,7 @@ class MedicineCrud extends Component
     {
         $this->validate([
             'name'  =>  'required',
-            'stock'  =>  ['required'],
+            'stock'  =>  ['required', 'gt:0'],
             'description'  =>  ['string'],
         ]);
         

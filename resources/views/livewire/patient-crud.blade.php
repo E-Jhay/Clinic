@@ -35,11 +35,19 @@
                                     <div class="form-group col-3 mt-2">
                                         <input type="text"  class="form-control border-secondary" placeholder="Search..." wire:model="searchTerm"/>
                                     </div>
-                                    <div class="form-group col-3 mt-2">
+                                    <div class="form-group col-2 mt-2">
                                         <select class="form-control custom-select border-secondary" wire:model="sortDesignation">
-                                            <option value="">All</option>
+                                            <option value="">All Designatin</option>
                                             @foreach ($designations as $designation)
                                                 <option value="{{$designation->id}}">{{$designation->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-2 mt-2">
+                                        <select class="form-control custom-select border-secondary" wire:model="sortCourse">
+                                            <option value="">All Course</option>
+                                            @foreach ($courses as $course)
+                                                <option value="{{$course->id}}">{{$course->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -55,7 +63,7 @@
                                             <option value="desc">Descending</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-2 mt-2">
+                                    <div class="form-group col-1 mt-2">
                                         <select class="form-control custom-select border-secondary" wire:model="perPage">
                                             <option value="10">10</option>
                                             <option value="20">20</option>

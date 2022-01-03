@@ -17,6 +17,7 @@ class HealthProfileCrud extends Component
     public $sortDirection = 'asc';
     public $sortBy = 'created_at';
     public $sortDesignation;
+    public $sortCourse;
     public $perPage = 10;
     public $designations;
     public $titlePage = "";
@@ -179,19 +180,21 @@ class HealthProfileCrud extends Component
     {
         $searchTerm = '%'.$this->searchTerm.'%';
         $sortDesignation = $this->sortDesignation;
+        if($this->sortDirection == 2 || $this->sortDirection == 3){
+            $this->sortCourse == 7;
+        }
+        $sortCourse = $this->sortCourse;
         return HealthProfile::with('designation')
             ->select('id', 'name', 'address', 'designation_id', 'course_id')
-            // ->where('designation_id', 3)
-            // ->when($sortDesignation, function ($q) use ($sortDesignation) {
-            //     $q->where('designation_id', $sortDesignation);
-            // })
             ->when($sortDesignation, function($q) use ($sortDesignation, $searchTerm){
                 $q->where('designation_id', $sortDesignation)
                     ->where('name', 'like', $searchTerm);
-                // ->when($searchTerm, function ($query) use ($searchTerm){
-                //     $query->where('name', 'like', $searchTerm)
-                //     ->orWhere('address', 'like', $searchTerm);
-                // });
+                }, function($q) use ($searchTerm){
+                    $q->where('name', 'like', $searchTerm);
+                })
+            ->when($sortCourse, function($q) use ($sortCourse, $searchTerm){
+                $q->where('course_id', $sortCourse)
+                    ->where('name', 'like', $searchTerm);
                 }, function($q) use ($searchTerm){
                     $q->where('name', 'like', $searchTerm);
                 })

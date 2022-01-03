@@ -34,7 +34,8 @@ class RouteServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
+    {   
+        parent::boot();
         $this->configureRateLimiting();
 
         $this->routes(function () {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Course;
 use App\Models\Designation;
 use App\Models\Patient;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,7 @@ class PatientCrud extends Component
     public $isOpen = 0;
     public $searchTerm;
     public $sortDesignation;
+    public $sortCourse;
     public $titlePage = "Patient Records";
     public $sortBy = 'created_at';
     public $sortDirection = 'asc';
@@ -33,6 +35,7 @@ class PatientCrud extends Component
         return view('livewire.Patient-crud',[
             'patients' =>  $this->Patient,
             'designations' =>  Designation::all(),
+            'courses' =>  Course::all(),
         ]);
     }
 
@@ -40,6 +43,7 @@ class PatientCrud extends Component
     {
         $searchTerm = '%'.$this->searchTerm.'%';
         $sortDesignation = $this->sortDesignation;
+        $sortCourse = $this->sortCourse;
         return Patient::select('id',
                 'name',
                 'diagnosis',
@@ -49,10 +53,12 @@ class PatientCrud extends Component
             ->when($sortDesignation, function($q) use ($sortDesignation, $searchTerm){
                 $q->where('designation_id', $sortDesignation)
                     ->where('name', 'like', $searchTerm);
-                // ->when($searchTerm, function ($query) use ($searchTerm){
-                //     $query->where('name', 'like', $searchTerm)
-                //     ->orWhere('address', 'like', $searchTerm);
-                // });
+                }, function($q) use ($searchTerm){
+                    $q->where('name', 'like', $searchTerm);
+                })
+            ->when($sortCourse, function($q) use ($sortCourse, $searchTerm){
+                $q->where('course_id', $sortCourse)
+                    ->where('name', 'like', $searchTerm);
                 }, function($q) use ($searchTerm){
                     $q->where('name', 'like', $searchTerm);
                 })
