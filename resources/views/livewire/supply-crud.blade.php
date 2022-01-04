@@ -57,8 +57,8 @@
                                                 <tr>
                                                     <th>Name</th>
                                                     <th>Description</th>
-                                                    <th style="width: 5rem">Stock</th>
-                                                    <th style="width: 16rem" class="text-center">Action</th>
+                                                    <th style="width: 8rem">Stock</th>
+                                                    <th style="width: 20rem" class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -74,8 +74,9 @@
                                                         <td class="text-center">{{$supply->total}}</td>
                                                     @endif
                                                     <td class="text-center">
+                                                        <button class="btn btn-warning btn-sm" wire:click="editSupply('{{$supply->id}}')"><i class="fas fa-edit"></i> Edit</button>
                                                         <button class="btn btn-success btn-sm" wire:click="addStock({{$supply->id}})"><i class="fas fa-eye"></i> Add Stock</button>
-                                                        <button class="btn btn-warning btn-sm" wire:click="removeStock({{$supply->id}})"><i class="fas fa-eye"></i> Remove Stock</button>
+                                                        <button class="btn btn-danger btn-sm" wire:click="removeStock({{$supply->id}})"><i class="fas fa-eye"></i> Remove Stock</button>
                                                     </td>
                                                 </tr>
                                                 @endforeach

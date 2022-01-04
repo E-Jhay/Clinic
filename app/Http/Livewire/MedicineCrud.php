@@ -13,10 +13,12 @@ class MedicineCrud extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $isOpen = 0;
+    public $updateMode = 0;
     public $searchTerm;
     public $sortBy = 'created_at';
     public $sortDirection = 'asc';
     public $perPage = 10;
+    public $code;
     public $name, $stock, $description, $expiration_date;
 
     protected $listeners = [
@@ -35,7 +37,7 @@ class MedicineCrud extends Component
     public function getMedicineProperty()
     {
         $searchTerm = '%'.$this->searchTerm.'%';
-        return Medicine::select('id', 'name', 'description', 'stock', DB::raw('SUM(stock) as total'),)
+        return Medicine::select('id', 'name', 'description', 'stock', 'code', DB::raw('SUM(stock) as total'),)
             ->when($searchTerm, function($q) use ($searchTerm){
                 $q->where('name', 'like', $searchTerm);
             })
@@ -45,6 +47,7 @@ class MedicineCrud extends Component
     }
     public function create()
     {
+        $this->updateMode = false;
         $this->resetFields();
         $this->openModal();
     }
@@ -118,71 +121,121 @@ class MedicineCrud extends Component
         $this->resetFields();
     }
 
-    public function addStock($id)
+    public function editMedicine($code)
     {
-        $this->dispatchBrowserEvent('swal:addStock',[
-            'type'  =>  'warning',
-            'title' =>  'Add Stock on the selected Item',
-            'text'  =>  '',
-            'id'    =>  $id,
-        ]);
+        $this->updateMode = true;
+        $medicine = Medicine::where('code', $code)->first();
+        $this->name = $medicine->name;
+        $this->description =$medicine->description;
+        // $this->accountId = $id;
+        $this->code = $code;
+        $this->emit('gotoTop');
+        $this->openModal();
+        // dd($code);
     }
-    public function addStockConfirmed($quantity, $id)
+
+    public function update()
     {
-        try{
-            $existingMedicine = Medicine::findOrFail($id);
-                if($existingMedicine){
-                    $existingMedicine->update([
-                        'stock'  =>  $existingMedicine->stock + $quantity,
-                    ]);
-                }
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>'Stock Added'
+        $this->validate([
+            'name' => ['required'],
+            'description' => 'string'
+        ]);
+
+        try {
+            Medicine::where('code', $this->code)
+                ->update([
+                'name'  =>  strtolower($this->name),
+                'code'  =>  strtolower(preg_replace('/\s+/', '', $this->name)),
+                'description'  =>  $this->description,
             ]);
-        }catch(\Exception $e){
+
+            $this->dispatchBrowserEvent('alert',[
+                'type'  =>  'success',
+                'message'   =>  'Medicine Updated Successfully'
+            ]);
+        } catch (\Exception $e) {
             $this->dispatchBrowserEvent('alert',[
                 'type'=>'error',
-                'message'=>"Something goes wrong"
+                'message'=>"Something goes wrong!!"
             ]);
         }
+        $this->updateMode = false;
+        $this->closeModal();
+        $this->resetFields();
     }
-    public function removeStock($id)
+
+    public function addStock($code)
     {
-        $this->dispatchBrowserEvent('swal:removeStock',[
-            'type'  =>  'warning',
-            'title' =>  'Remove Stock on the selected Item',
-            'text'  =>  '',
-            'id'    =>  $id,
-        ]);
+        // $this->dispatchBrowserEvent('swal:addStock',[
+        //     'type'  =>  'warning',
+        //     'title' =>  'Add Stock on the selected Item',
+        //     'text'  =>  '',
+        //     'id'    =>  $id,
+        // ]);
+        $medicine = Medicine::where('code', $code)->first();
+        $this->name = $medicine->name;
+        $this->description =$medicine->description;
+        // $this->accountId = $id;
+        // $this->code = $code;
+        $this->emit('gotoTop');
+        $this->openModal();
     }
-    public function removeStockConfirmed($quantity, $id)
-    {
-        try{
-            $existingMedicine = Medicine::findOrFail($id);
-                if($existingMedicine){
-                    if($existingMedicine->stock >= $quantity){
-                        $existingMedicine->update([
-                            'stock'  =>  $existingMedicine->stock - $quantity,
-                        ]);
-                    }
-                    else{
-                        $existingMedicine->update([
-                            'stock'  =>  0,
-                        ]);
-                    }
-                }
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'success',
-                'message'=>'Stock Removed'
-            ]);
-        }catch(\Exception $e){
-            $this->dispatchBrowserEvent('alert',[
-                'type'=>'error',
-                'message'=>"Something goes wrong"
-            ]);
-        }
-    }
+    // public function addStockConfirmed($quantity, $id)
+    // {
+    //     try{
+    //         $existingMedicine = Medicine::findOrFail($id);
+    //             if($existingMedicine){
+    //                 $existingMedicine->update([
+    //                     'stock'  =>  $existingMedicine->stock + $quantity,
+    //                 ]);
+    //             }
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'success',
+    //             'message'=>'Stock Added'
+    //         ]);
+    //     }catch(\Exception $e){
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'error',
+    //             'message'=>"Something goes wrong"
+    //         ]);
+    //     }
+    // }
+    // public function removeStock($id)
+    // {
+    //     $this->dispatchBrowserEvent('swal:removeStock',[
+    //         'type'  =>  'warning',
+    //         'title' =>  'Remove Stock on the selected Item',
+    //         'text'  =>  '',
+    //         'id'    =>  $id,
+    //     ]);
+    // }
+    // public function removeStockConfirmed($quantity, $id)
+    // {
+    //     try{
+    //         $existingMedicine = Medicine::findOrFail($id);
+    //             if($existingMedicine){
+    //                 if($existingMedicine->stock >= $quantity){
+    //                     $existingMedicine->update([
+    //                         'stock'  =>  $existingMedicine->stock - $quantity,
+    //                     ]);
+    //                 }
+    //                 else{
+    //                     $existingMedicine->update([
+    //                         'stock'  =>  0,
+    //                     ]);
+    //                 }
+    //             }
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'success',
+    //             'message'=>'Stock Removed'
+    //         ]);
+    //     }catch(\Exception $e){
+    //         $this->dispatchBrowserEvent('alert',[
+    //             'type'=>'error',
+    //             'message'=>"Something goes wrong"
+    //         ]);
+    //     }
+    // }
 
 
 }

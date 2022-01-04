@@ -17,6 +17,8 @@ class EquipmentCrud extends Component
     public $sortBy = 'created_at';
     public $sortDirection = 'asc';
     public $perPage = 10;
+    public $updateMode = 0;
+    public $equipmentId;
     public $name, $stock, $description;
 
     protected $listeners = [
@@ -45,6 +47,7 @@ class EquipmentCrud extends Component
     }
     public function create()
     {
+        $this->updateMode = false;
         $this->resetFields();
         $this->openModal();
     }
@@ -101,9 +104,52 @@ class EquipmentCrud extends Component
                 'message'=>"Something goes wrong"
             ]);
         }
+        // dd("store");
 
         $this->closeModal();
         $this->resetFields();
+    }
+
+    public function editEquipment($id)
+    {
+        $this->updateMode = true;
+        $equipment = Equipment::findOrFail($id);
+        $this->name = $equipment->name;
+        $this->description = $equipment->description;
+        $this->equipmentId = $id;
+        $this->emit('gotoTop');
+        $this->openModal();
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'name'  =>  'required',
+            'description'  =>  ['string'],
+        ]);
+
+        try {
+            Equipment::where('id', $this->equipmentId)
+                ->update([
+                'name'  =>  $this->name,
+                'description'  =>  $this->description,
+            ]);
+
+            $this->dispatchBrowserEvent('alert',[
+                'type'  =>  'success',
+                'message'   =>  'Equipment Updated Successfully'
+            ]);
+        } catch (\Exception $e) {
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something goes wrong!!"
+            ]);
+        }
+        
+        $this->updateMode = false;
+        $this->closeModal();
+        $this->resetFields();
+        // dd($this->equipmentId);
     }
 
     public function addStock($id)

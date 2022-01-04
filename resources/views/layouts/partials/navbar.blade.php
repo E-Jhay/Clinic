@@ -10,6 +10,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
 
+      @livewire('navbar-notification')
 
       <ul class="navbar-nav ml-auto">
         <!-- Authentication Links -->

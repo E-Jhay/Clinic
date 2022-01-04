@@ -20,6 +20,7 @@ class CreateMedicinesTable extends Migration
             $table->string('description')->nullable();
             $table->integer('stock');
             $table->date('expiration_day');
+            $table->boolean('isExpired')->default(0);
             $table->timestamps();
         });
     }

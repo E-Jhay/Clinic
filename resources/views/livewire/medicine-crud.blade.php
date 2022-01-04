@@ -17,7 +17,11 @@
         <div class="container-fluid">
             <div class="row">
                 @if($isOpen)
-                    @include('livewire.medicine-create')
+                    @if ($updateMode)
+                        @include('livewire.medicine-update')
+                    @else
+                        @include('livewire.medicine-create')
+                    @endif
                 @endif
             </div>
             <div class="row">
@@ -57,8 +61,8 @@
                                                 <tr>
                                                     <th>Name</th>
                                                     <th>Description</th>
-                                                    <th style="width: 6rem">Stock</th>
-                                                    <th style="width: 16rem" class="text-center">Action</th>
+                                                    <th style="width: 8rem" class="text-center">Stock</th>
+                                                    <th style="width: 14rem" class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -74,8 +78,9 @@
                                                         <td class="text-center">{{$medicine->total}}</td>
                                                     @endif
                                                     <td class="text-center">
-                                                        <button class="btn btn-success btn-sm" wire:click="addStock({{$medicine->id}})"><i class="fas fa-plus-circle"></i> Add Stock</button>
-                                                        <button class="btn btn-warning btn-sm" wire:click="removeStock({{$medicine->id}})"><i class="fas fa-minus-circle"></i> Remove Stock</button>
+                                                        <button class="btn btn-warning btn-sm" wire:click="editMedicine('{{$medicine->code}}')"><i class="fas fa-edit"></i> Edit</button>
+                                                        <button class="btn btn-success btn-sm" wire:click="addStock('{{$medicine->code}}')"><i class="fas fa-plus-circle"></i> Add Stock</button>
+                                                        {{-- <button class="btn btn-danger btn-sm" wire:click="removeStock({{$medicine->id}})"><i class="fas fa-minus-circle"></i> Remove Stock</button> --}}
                                                     </td>
                                                 </tr>
                                                 @endforeach

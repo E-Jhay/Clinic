@@ -17,6 +17,8 @@ class SupplyCrud extends Component
     public $sortBy = 'created_at';
     public $sortDirection = 'asc';
     public $perPage = 10;
+    public $updateMode = 0;
+    public $supplyId;
     public $name, $stock, $description;
 
     protected $listeners = [
@@ -45,6 +47,7 @@ class SupplyCrud extends Component
     }
     public function create()
     {
+        $this->updateMode = false;
         $this->resetFields();
         $this->openModal();
     }
@@ -104,6 +107,48 @@ class SupplyCrud extends Component
 
         $this->closeModal();
         $this->resetFields();
+    }
+
+    public function editSupply($id)
+    {
+        $this->updateMode = true;
+        $supply = Supply::findOrFail($id);
+        $this->name = $supply->name;
+        $this->description = $supply->description;
+        $this->supplyId = $id;
+        $this->emit('gotoTop');
+        $this->openModal();
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'name'  =>  'required',
+            'description'  =>  ['string'],
+        ]);
+
+        try {
+            Supply::where('id', $this->supplyId)
+                ->update([
+                'name'  =>  $this->name,
+                'description'  =>  $this->description,
+            ]);
+
+            $this->dispatchBrowserEvent('alert',[
+                'type'  =>  'success',
+                'message'   =>  'Supply Updated Successfully'
+            ]);
+        } catch (\Exception $e) {
+            $this->dispatchBrowserEvent('alert',[
+                'type'=>'error',
+                'message'=>"Something goes wrong!!"
+            ]);
+        }
+        
+        $this->updateMode = false;
+        $this->closeModal();
+        $this->resetFields();
+        // dd($this->equipmentId);
     }
 
     public function addStock($id)
