@@ -43,6 +43,11 @@ Route::middleware(['auth'])->group(function (){
     Route::view('/medical-illness-monthly-report', 'medical-illness-reports.medical-illness-monthly-report')->name('medical-illness-monthly-report');
     Route::view('/medical-illness-quarterly-report', 'medical-illness-reports.medical-illness-quarterly-report')->name('medical-illness-quarterly-report');
     Route::view('/medical-illness-anually-report', 'medical-illness-reports.medical-illness-anually-report')->name('medical-illness-anually-report');
+
+    Route::view('/expired-medicine-monthly-report', 'expired-medicine-reports.expired-medicine-monthly-report')->name('expired-medicine-monthly-report');
+    Route::view('/expired-medicine-quarterly-report', 'expired-medicine-reports.expired-medicine-quarterly-report')->name('expired-medicine-quarterly-report');
+    Route::view('/expired-medicine-anually-report', 'expired-medicine-reports.expired-medicine-anually-report')->name('expired-medicine-anually-report');
+    
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
 });

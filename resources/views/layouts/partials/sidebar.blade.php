@@ -101,6 +101,14 @@
                   </p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('expired-medicine-monthly-report')}}" class="nav-link">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>
+                    Expired Medicine
+                  </p>
+                </a>
+              </li>
             </ul>
           </li>
 
