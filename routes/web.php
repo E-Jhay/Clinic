@@ -47,6 +47,8 @@ Route::middleware(['auth'])->group(function (){
     Route::view('/expired-medicine-monthly-report', 'expired-medicine-reports.expired-medicine-monthly-report')->name('expired-medicine-monthly-report');
     Route::view('/expired-medicine-quarterly-report', 'expired-medicine-reports.expired-medicine-quarterly-report')->name('expired-medicine-quarterly-report');
     Route::view('/expired-medicine-anually-report', 'expired-medicine-reports.expired-medicine-anually-report')->name('expired-medicine-anually-report');
+
+    Route::view('/bmi', 'bmi.bmi-crud')->name('bmi');
     
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 

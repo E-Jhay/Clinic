@@ -208,6 +208,16 @@
             </a>
           </li> --}}
           <li class="nav-item">
+            <a href="{{route('bmi')}}" class="nav-link 
+              {{ request()->is('bmi') ? 'active' : null }}
+            ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                BMI
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             {{-- <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
             document.getElementById('logout-form').submit();"> --}}
             <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">

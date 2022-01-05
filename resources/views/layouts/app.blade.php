@@ -244,6 +244,21 @@ aria-hidden="true">
             }
         })
     })
+    window.addEventListener('swal:removeBmi', event => {
+        Swal.fire({
+            title: event.detail.title,
+            text: event.detail.text,
+            icon: event.detail.type,
+            id: event.detail.id,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emit('removeBmiConfirmed', event.detail.id)
+            }
+        })
+    })
     window.addEventListener('swal:accountsConfirm', event => {
         Swal.fire({
             title: event.detail.title,

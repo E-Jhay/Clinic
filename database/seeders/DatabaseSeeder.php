@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(DesignationSeeder::class);
         $this->call(CourseSeeder::class);
+        $this->call(BmiClassificationSeeder::class);
     }
 }
