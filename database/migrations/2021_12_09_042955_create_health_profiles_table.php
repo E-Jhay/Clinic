@@ -15,7 +15,9 @@ class CreateHealthProfilesTable extends Migration
     {
         Schema::create('health_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('middle_name')->nullable();
+            $table->string('last_name');
             $table->string('mobile_no');
             $table->string('age');
             $table->string('sex');

@@ -24,7 +24,7 @@ class HealthProfileCrud extends Component
     public $designationStatus = "";
     public $isOpen = 0;
     public $healthProfileId;
-    public $name, $mobile_no, $age, $sex, $civil_status, $birthday, $address, $contact_person, $symptoms, $illness, $hospitalization, $allergies, $ps_history, $ob_history, $temperature, $pulse, $blood_pressure, $designation_id, $course_id;
+    public $first_name, $middle_name, $last_name, $mobile_no, $age, $sex, $civil_status, $birthday, $address, $contact_person, $symptoms, $illness, $hospitalization, $allergies, $ps_history, $ob_history, $temperature, $pulse, $blood_pressure, $designation_id, $course_id;
 
 
     public function render()
@@ -60,7 +60,9 @@ class HealthProfileCrud extends Component
 
     public function resetFields()
     {
-        $this->name = '';
+        $this->first_name = '';
+        $this->middle_name = '';
+        $this->last_name = '';
         $this->mobile_no    = '';
         $this->age  = '';
         $this->sex  = '';
@@ -85,7 +87,8 @@ class HealthProfileCrud extends Component
     public function store()
     {
         $this->validate([
-            'name'=>'required',
+            'first_name'=>'required',
+            'last_name'=>'required',
             'mobile_no'=>['required', 'regex:/^9\d{9}$/'],
             'age'=>['required'],
             'sex'=>['required', 'in:male,female'],
@@ -113,7 +116,9 @@ class HealthProfileCrud extends Component
                 $this->course_id = 7;
             }
             HealthProfile::updateOrCreate(['id' => $this->healthProfileId], [
-                'name'              =>      $this->name,
+                'first_name'        =>      $this->first_name,
+                'middle_name'       =>      $this->middle_name,
+                'last_name'         =>      $this->last_name,
                 'mobile_no'         =>      $this->mobile_no,
                 'age'               =>      $this->age,
                 'sex'               =>      $this->sex,
@@ -152,7 +157,9 @@ class HealthProfileCrud extends Component
     {
         $this->buttonText = "Update";
         $healthProfile = HealthProfile::findOrFail($id);
-        $this->name                 = $healthProfile->name;
+        $this->first_name           = $healthProfile->first_name;
+        $this->middle_name          = $healthProfile->middle_name;
+        $this->last_name            = $healthProfile->last_name;
         $this->mobile_no            = $healthProfile->mobile_no;
         $this->age                  = $healthProfile->age;
         $this->sex                  = $healthProfile->sex;
@@ -185,18 +192,26 @@ class HealthProfileCrud extends Component
         }
         $sortCourse = $this->sortCourse;
         return HealthProfile::with('designation')
-            ->select('id', 'name', 'address', 'designation_id', 'course_id')
+            ->select('id', 'first_name', 'middle_name', 'last_name', 'address', 'designation_id', 'course_id')
             ->when($sortDesignation, function($q) use ($sortDesignation, $searchTerm){
                 $q->where('designation_id', $sortDesignation)
-                    ->where('name', 'like', $searchTerm);
+                    ->where('first_name', 'like', $searchTerm)
+                    ->orWhere('middle_name', 'like', $searchTerm)
+                    ->orWhere('last_name', 'like', $searchTerm);
                 }, function($q) use ($searchTerm){
-                    $q->where('name', 'like', $searchTerm);
+                    $q->where('first_name', 'like', $searchTerm)
+                    ->orWhere('middle_name', 'like', $searchTerm)
+                    ->orWhere('last_name', 'like', $searchTerm);
                 })
             ->when($sortCourse, function($q) use ($sortCourse, $searchTerm){
                 $q->where('course_id', $sortCourse)
-                    ->where('name', 'like', $searchTerm);
+                    ->where('first_name', 'like', $searchTerm)
+                    ->orWhere('middle_name', 'like', $searchTerm)
+                    ->orWhere('last_name', 'like', $searchTerm);
                 }, function($q) use ($searchTerm){
-                    $q->where('name', 'like', $searchTerm);
+                    $q->where('first_name', 'like', $searchTerm)
+                    ->orWhere('middle_name', 'like', $searchTerm)
+                    ->orWhere('last_name', 'like', $searchTerm);
                 })
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate($this->perPage);

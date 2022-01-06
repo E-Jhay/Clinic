@@ -15,7 +15,7 @@ class CreateBmisTable extends Migration
     {
         Schema::create('bmis', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('health_profile_id')->constrained();
             $table->decimal('height', 10, 2);
             $table->decimal('weight', 10, 2);
             $table->decimal('bmi', 10, 2);

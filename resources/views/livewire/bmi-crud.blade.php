@@ -4,8 +4,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1 class="m-0 d-inline">BMI's</h1>
-                    <button wire:click="create()" class="d-inline btn btn-primary float-right">Insert BMI</button>
+                    <h1 class="m-0 d-inline">{{ucfirst($first_name)}}'s BMI</h1>
+                    <button wire:click="create()" class="d-inline btn btn-primary float-right">Insert New BMI</button>
+                </div><!-- /.col -->
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{route('bmi')}}" class="btn btn-secondary">Go Back</a>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -26,9 +31,6 @@
                         <div class="tab-content p-3">
                             <div class="tab-pane active" id="pending">
                                 <div class="row">
-                                    <div class="form-group col-3 mt-2">
-                                        <input type="text"  class="form-control border-secondary" placeholder="Search..." wire:model="searchTerm"/>
-                                    </div>
                                     <div class="form-group col-2 mt-2">
                                         <select class="form-control custom-select border-secondary" wire:model="sortClassification">
                                             <option value="">Classification (all)</option>
@@ -65,28 +67,36 @@
                                             <table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
                                                     <th>Height</th>
                                                     <th>Weight</th>
                                                     <th>BMI</th>
                                                     <th>Classification</th>
+                                                    <th>Month Year</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($bmis as $bmi)
-                                                <tr>
-                                                    <td>{{ucfirst($bmi->name)}}</td>
-                                                    <td>{{$bmi->height}}</td>
-                                                    <td>{{$bmi->weight}}</td>
-                                                    <td>{{$bmi->bmi}}</td>
-                                                    <td>{{$bmi->classification->name}}</td>
-                                                    <td class="text-center">
-                                                        <button class="btn btn-success btn-sm" wire:click="edit('{{$bmi->id}}')"><i class="fas fa-edit"></i> Edit</button>
-                                                        <button class="btn btn-danger btn-sm" wire:click="removeBmi({{$bmi->id}})"><i class="fas fa-trash"></i> Remove</button>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
+                                                @forelse ($bmis as $bmi)
+                                                    <tr>
+                                                        <td>{{$bmi->height}}</td>
+                                                        <td>{{$bmi->weight}}</td>
+                                                        <td>{{$bmi->bmi}}</td>
+                                                        <td>{{$bmi->classification->name}}</td>
+                                                        <td>{{$bmi->created_at->format('M Y')}}</td>
+                                                        {{-- <td>{{$healthProfile->healthProfile}}</td> --}}
+                                                        {{-- <td>{{$healthProfile->classification->name}}</td> --}}
+                                                        <td class="text-center">
+                                                            <button class="btn btn-success btn-sm" wire:click="edit('{{$bmi->id}}')"><i class="fas fa-edit"></i> Edit</button>
+                                                            <button class="btn btn-danger btn-sm" wire:click="removehealthProfile({{$bmi->id}})"><i class="fas fa-trash"></i> Remove</button>
+
+                                                            {{-- <button class="btn btn-success btn-sm" wire:click="viewRecords('{{$healthProfile->id}}')"><i class="fas fa-eye"></i> View Records</button> --}}
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="6" class="text-center">No Data</td>
+                                                    </tr>
+                                                @endforelse
                                             </tbody>
                                             </table>
                                             <p>

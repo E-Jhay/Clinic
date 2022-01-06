@@ -1,23 +1,11 @@
-@push('css')
-<style>
-    .nav-tabs .nav-link{
-        color: #000;
-    }
-    .nav-tabs .nav-link.active{
-        color: #fff;
-        background-color: #278af5;
-        border-color: trasparent;
-    }
-</style>
-@endpush
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1 class="m-0 d-inline">{{$titlePage. " Health Profile"}}</h1>
-                    <button wire:click="create()" class="d-inline btn btn-primary float-right">Add Profile</button>
+                    <h1 class="m-0 d-inline">Faculty's BMI</h1>
+                    {{-- <button wire:click="create()" class="d-inline btn btn-primary float-right">Insert healthProfile</button> --}}
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -27,11 +15,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            @if($isOpen)
-                <div class="row">
-                    @include('livewire.health-profile-create')
-                </div>
-            @endif
+            <div class="row">
+                @if($isOpen)
+                    @include('livewire.bmi-create')
+                @endif
+            </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
@@ -42,28 +30,19 @@
                                         <input type="text"  class="form-control border-secondary" placeholder="Search..." wire:model="searchTerm"/>
                                     </div>
                                     <div class="form-group col-2 mt-2">
-                                        <select class="form-control custom-select border-secondary" wire:model="sortDesignation">
-                                            <option value="">All Designation</option>
-                                            @foreach ($designations as $designation)
-                                                <option value="{{$designation->id}}">{{$designation->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-2 mt-2">
-                                        <select class="form-control custom-select border-secondary" wire:model="sortCourse">
-                                            <option value="">All Course</option>
-                                            @foreach ($courses as $course)
-                                                <option value="{{$course->id}}">{{$course->name}}</option>
+                                        <select class="form-control custom-select border-secondary" wire:model="sortClassification">
+                                            <option value="">Classification (all)</option>
+                                            @foreach ($bmi_classifications as $bmi_classification)
+                                                <option value="{{$bmi_classification->id}}">{{$bmi_classification->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-2 mt-2">
                                         <select class="form-control custom-select border-secondary" wire:model="sortBy">
-                                            <option value="created_at">Date Created</option>
-                                            <option value="first_name">First Name</option>
-                                            <option value="middle_name">Middle Name</option>
-                                            <option value="last_name">Last Name</option>
-                                            <option value="address">Address</option>
+                                            <option value="created_at">Created At</option>
+                                            <option value="name">Name</option>
+                                            <option value="height">Height</option>
+                                            <option value="weight">Weight</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-2 mt-2" wire:model="sortDirection">
@@ -72,7 +51,7 @@
                                             <option value="desc">Descending</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-1 mt-2">
+                                    <div class="form-group col-2 mt-2">
                                         <select class="form-control custom-select border-secondary" wire:model="perPage">
                                             <option value="10">10</option>
                                             <option value="20">20</option>
@@ -86,24 +65,29 @@
                                             <table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
                                                     <th>Name</th>
+                                                    <th>Age</th>
+                                                    <th>Sex</th>
                                                     <th>Address</th>
-                                                    <th>Designation</th>
-                                                    <th>Course</th>
-                                                    <th></th>
+                                                    {{-- <th>healthProfile</th> --}}
+                                                    {{-- <th>Classification</th> --}}
+                                                    <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach ($healthProfiles as $healthProfile)
                                                 <tr>
-                                                    <td>{{$healthProfile->id}}</td>
-                                                    <td>{{$healthProfile->first_name ." ". $healthProfile->middle_name ." ". $healthProfile->last_name}}</td>
-                                                    <td>{{$healthProfile->address}}</td>
-                                                    <td>{{$healthProfile->designation->name}}</td>
-                                                    <td>{{$healthProfile->course->name}}</td>
+                                                    <td>{{ucfirst($healthProfile->first_name ." ". $healthProfile->middle_name ." ". $healthProfile->last_name)}}</td>
+                                                    <td>{{$healthProfile->age}}</td>
+                                                    <td>{{ucfirst($healthProfile->sex)}}</td>
+                                                    <td>{{ucfirst($healthProfile->address)}}</td>
+                                                    {{-- <td>{{$healthProfile->healthProfile}}</td> --}}
+                                                    {{-- <td>{{$healthProfile->classification->name}}</td> --}}
                                                     <td class="text-center">
-                                                        <button class="btn btn-success" wire:click="edit({{$healthProfile->id}})"><i class="fas fa-eye"></i> View</button>
+                                                        {{-- <button class="btn btn-success btn-sm" wire:click="edit('{{$healthProfile->id}}')"><i class="fas fa-edit"></i> Edit</button>
+                                                        <button class="btn btn-danger btn-sm" wire:click="removehealthProfile({{$healthProfile->id}})"><i class="fas fa-trash"></i> Remove</button> --}}
+
+                                                        <button class="btn btn-success btn-sm" wire:click="viewRecords('{{$healthProfile->id}}')"><i class="fas fa-eye"></i> View Records</button>
                                                     </td>
                                                 </tr>
                                                 @endforeach

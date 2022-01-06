@@ -4,10 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\Bmi;
 use App\Models\BmiClassification;
+use App\Models\HealthProfile;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class BmiCrud extends Component
+class Faculty extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -18,49 +19,39 @@ class BmiCrud extends Component
     public $sortBy = 'created_at';
     public $sortClassification;
     public $perPage = 10;
-    public $height, $weight;
-    public $from_id, $first_name;
+    public $name, $height, $weight;
 
-    public function mount($first_name, $from_id)
-    {
-        $this->first_name = $first_name;
-        $this->from_id = $from_id;
-        // dd($this->$from_designation_id);
-    }
+    protected $listeners = [
+        'removeBmiConfirmed' => 'removeBmiConfirmed',
+
+    ];
 
     public function render()
     {
-        return view('livewire.bmi-crud', [
-            'bmis'  =>  $this->bmis,
+        return view('livewire.faculty', [
+            'healthProfiles'    =>  $this->healthProfiles,
             'bmi_classifications'    =>  BmiClassification::select('id', 'name')->get(),
         ]);
     }
 
-    public function getBmisProperty()
+    public function getHealthProfilesProperty()
     {
         $searchTerm = '%'.$this->searchTerm.'%';
         $sortClassification = $this->sortClassification;
-        return Bmi::with('classification')
-            ->select('id', 'health_profile_id','bmi','height', 'weight', 'bmi_classification_id', 'created_at')
-            ->where('health_profile_id', $this->from_id)
-            ->when($sortClassification, function($q) use ($sortClassification, $searchTerm){
-                    $q->where('bmi_classification_id', $sortClassification)
-                        ->where('health_profile_id', 'like', $searchTerm);
-                }, function($q) use ($searchTerm){
-                        $q->where('health_profile_id', 'like', $searchTerm);
-                    })
-            ->orderBy($this->sortBy, $this->sortDirection)
-            ->paginate($this->perPage);
-            // ->where('health_profile_id', $this->from_id)
-            // ->when($sortClassification, function($q) use ($sortClassification, $searchTerm){
-            //     $q->where('bmi_classification_id', $sortClassification)
-            //         ->where('health_profile_id', 'like', $searchTerm);
-            // }, function($q) use ($searchTerm){
-            //         $q->where('health_profile_id', 'like', $searchTerm);
-            //     })
-            // ->where('bmi_classification_id', $sortClassification)
-            // ->orderBy($this->sortBy, $this->sortDirection)
-            // ->paginate($this->perPage);
+        // return Bmi::with('classification', 'health_profile')
+        //         ->select('id', 'health_profile_id', 'height', 'weight', 'bmi', 'bmi_classification_id')
+        //         ->when($sortClassification, function($q) use ($sortClassification, $searchTerm){
+        //             $q->where('bmi_classification_id', $sortClassification)
+        //                 ->where('health_profile_id', 'like', $searchTerm);
+        //         }, function($q) use ($searchTerm){
+        //                 $q->where('health_profile_id', 'like', $searchTerm);
+        //             })
+        //     ->orderBy($this->sortBy, $this->sortDirection)
+        //     ->paginate($this->perPage);
+        return HealthProfile::select('id', 'first_name', 'middle_name', 'last_name', 'age', 'sex', 'address', 'designation_id', 'course_id')
+                ->where('designation_id', 2)
+                ->orderBy($this->sortBy, $this->sortDirection)
+                ->paginate($this->perPage);
     }
 
     public function create()
@@ -82,6 +73,7 @@ class BmiCrud extends Component
 
     public function resetFields()
     {
+        $this->name = '';
         $this->height ='';
         $this->weight ='';
     }
@@ -89,6 +81,7 @@ class BmiCrud extends Component
     public function store()
     {
         $this->validate([
+            'name'  =>  'required',
             'height'  =>  ['required', 'lt:4'],
             'weight'  =>  ['required'],
         ]);
@@ -108,7 +101,7 @@ class BmiCrud extends Component
             
             // dd($bmi. " ". $classification);
             Bmi::create([
-                'health_profile_id' => $this->from_id,
+                'name' => $this->name,
                 'height' => $this->height,
                 'weight' => $this->weight,
                 'bmi' => $bmi,
@@ -145,6 +138,7 @@ class BmiCrud extends Component
     public function update()
     {
         $this->validate([
+            'name'  =>  'required',
             'height'  =>  ['required', 'lt:4'],
             'weight'  =>  ['required'],
         ]);
@@ -164,6 +158,7 @@ class BmiCrud extends Component
 
             Bmi::where('id', $this->bmiId)
                 ->update([
+                    'name' => $this->name,
                     'height' => $this->height,
                     'weight' => $this->weight,
                     'bmi' => $bmi,
@@ -213,5 +208,13 @@ class BmiCrud extends Component
                 'message'=>"Something goes wrong"
             ]);
         }
+    }
+
+    public function viewRecords($id)
+    {
+        $facultyBmi = HealthProfile::findOrFail($id);
+        return redirect()->to('/faculty-bmi/'.str_replace(' ', '', $facultyBmi->first_name). '/'.$id);
+        // return redirect()->to('/patient-record/'.$name.'/'.$designation_id);
+        // dd($facultyRecords->first_name);
     }
 }

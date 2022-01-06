@@ -7,9 +7,27 @@
             <form wire:submit.prevent="store()">
                 <div class="row mb-3">
                   <div class="col-md-4">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" wire:model.lazy="name" id="name" placeholder="" value="" >
-                    @error('name')
+                    <label for="first_name">First Name</label>
+                    <input type="text" class="form-control" wire:model.lazy="first_name" id="name" placeholder="" value="" >
+                    @error('first_name')
+                      <div class="text-danger">
+                          {{$message}}
+                      </div>
+                    @enderror
+                  </div>
+                  <div class="col-md-4">
+                    <label for="middle_name">Middle Name</label>
+                    <input type="text" class="form-control" wire:model.lazy="middle_name" id="name" placeholder="" value="" >
+                    @error('middle_name')
+                      <div class="text-danger">
+                          {{$message}}
+                      </div>
+                    @enderror
+                  </div>
+                  <div class="col-md-4">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" class="form-control" wire:model.lazy="last_name" id="name" placeholder="" value="" >
+                    @error('last_name')
                       <div class="text-danger">
                           {{$message}}
                       </div>
@@ -52,21 +70,21 @@
                         </div>
                       @enderror
                   </div>
+                  <div class="col-md-4">
+                    <label for="birthday">Birthday</label>
+                    <input type="date" class="form-control" wire:model.lazy="birthday" id="birthday" placeholder="" value="" >
+                    @error('birthday')
+                      <div class="text-danger">
+                          {{$message}}
+                      </div>
+                    @enderror
+                </div>
                 </div>
                 <div class="row mb-3">
                   <div class="col-md-6">
                       <label for="address">Address</label>
                       <input type="text" class="form-control" wire:model.lazy="address" id="address" placeholder="1234 Main St" >
                       @error('address')
-                        <div class="text-danger">
-                            {{$message}}
-                        </div>
-                      @enderror
-                  </div>
-                  <div class="col-md-3">
-                      <label for="birthday">Birthday</label>
-                      <input type="date" class="form-control" wire:model.lazy="birthday" id="birthday" placeholder="" value="" >
-                      @error('birthday')
                         <div class="text-danger">
                             {{$message}}
                         </div>
@@ -81,6 +99,20 @@
                           <option value="widowed">Widowed</option>
                       </select>
                       @error('civil_status')
+                        <div class="text-danger">
+                            {{$message}}
+                        </div>
+                      @enderror
+                  </div>
+                  <div class="col-md-3">
+                      <label for="course_id">Course</label>
+                      <select class="custom-select d-block w-100" wire:model.lazy="course_id" id="course_id" >
+                          <option value="">Select Course</option>
+                          @foreach ($courses as $course)
+                              <option value="{{$course->id}}">{{$course->name}}</option>
+                          @endforeach
+                      </select>
+                      @error('course_id')
                         <div class="text-danger">
                             {{$message}}
                         </div>
@@ -106,20 +138,6 @@
                           @endforeach
                       </select>
                       @error('designation_id')
-                        <div class="text-danger">
-                            {{$message}}
-                        </div>
-                      @enderror
-                  </div>
-                  <div class="col-md-3">
-                      <label for="course_id">Course</label>
-                      <select class="custom-select d-block w-100" wire:model.lazy="course_id" id="course_id" >
-                          <option value="">Select Course</option>
-                          @foreach ($courses as $course)
-                              <option value="{{$course->id}}">{{$course->name}}</option>
-                          @endforeach
-                      </select>
-                      @error('course_id')
                         <div class="text-danger">
                             {{$message}}
                         </div>

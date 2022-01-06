@@ -7,17 +7,6 @@
           <form wire:submit.prevent="{{$updateMode ? 'update' : 'store'}}">
               <div class="row mb-3">
                 <div class="col-md-6">
-                  <label for="name">Name</label>
-                  <input type="text" class="form-control" wire:model.lazy="name" id="name" placeholder="" value="" >
-                  @error('name')
-                    <div class="text-danger">
-                        {{$message}}
-                    </div>
-                  @enderror
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col-md-6">
                   <label for="height">Height <span class="text-muted">(in kilogram)</span></label>
                   <input type="number" step=".01" class="form-control" wire:model.lazy="height" id="height" placeholder="" value="" >
                   @error('height')
