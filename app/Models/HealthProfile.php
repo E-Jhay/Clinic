@@ -43,4 +43,9 @@ class HealthProfile extends Model
         return $this->hasOne(Course::class, 'id', 'course_id');
     }
 
+    public function bmis()
+    {
+        return $this->hasMany(Bmi::class);
+    }
+
 }

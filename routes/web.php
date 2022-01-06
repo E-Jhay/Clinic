@@ -53,6 +53,8 @@ Route::middleware(['auth'])->group(function (){
         // $patientRecords = Patient::where('name', $name)->get();
         return view('bmi.view-bmi', compact('from_first_name', 'from_id'));
     })->name('view-bmi');
+
+    Route::view('/bmi-monthly-report', 'bmi-reports.bmi-monthly-report')->name('bmi-monthly-report');
     
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 

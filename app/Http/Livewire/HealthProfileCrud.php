@@ -195,23 +195,15 @@ class HealthProfileCrud extends Component
             ->select('id', 'first_name', 'middle_name', 'last_name', 'address', 'designation_id', 'course_id')
             ->when($sortDesignation, function($q) use ($sortDesignation, $searchTerm){
                 $q->where('designation_id', $sortDesignation)
-                    ->where('first_name', 'like', $searchTerm)
-                    ->orWhere('middle_name', 'like', $searchTerm)
-                    ->orWhere('last_name', 'like', $searchTerm);
+                    ->where('first_name', 'like', $searchTerm);
                 }, function($q) use ($searchTerm){
-                    $q->where('first_name', 'like', $searchTerm)
-                    ->orWhere('middle_name', 'like', $searchTerm)
-                    ->orWhere('last_name', 'like', $searchTerm);
+                    $q->where('first_name', 'like', $searchTerm);
                 })
             ->when($sortCourse, function($q) use ($sortCourse, $searchTerm){
                 $q->where('course_id', $sortCourse)
-                    ->where('first_name', 'like', $searchTerm)
-                    ->orWhere('middle_name', 'like', $searchTerm)
-                    ->orWhere('last_name', 'like', $searchTerm);
+                    ->where('first_name', 'like', $searchTerm);
                 }, function($q) use ($searchTerm){
-                    $q->where('first_name', 'like', $searchTerm)
-                    ->orWhere('middle_name', 'like', $searchTerm)
-                    ->orWhere('last_name', 'like', $searchTerm);
+                    $q->where('first_name', 'like', $searchTerm);
                 })
             ->orderBy($this->sortBy, $this->sortDirection)
             ->paginate($this->perPage);

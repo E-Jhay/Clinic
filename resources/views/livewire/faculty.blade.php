@@ -30,19 +30,9 @@
                                         <input type="text"  class="form-control border-secondary" placeholder="Search..." wire:model="searchTerm"/>
                                     </div>
                                     <div class="form-group col-2 mt-2">
-                                        <select class="form-control custom-select border-secondary" wire:model="sortClassification">
-                                            <option value="">Classification (all)</option>
-                                            @foreach ($bmi_classifications as $bmi_classification)
-                                                <option value="{{$bmi_classification->id}}">{{$bmi_classification->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-2 mt-2">
                                         <select class="form-control custom-select border-secondary" wire:model="sortBy">
                                             <option value="created_at">Created At</option>
-                                            <option value="name">Name</option>
-                                            <option value="height">Height</option>
-                                            <option value="weight">Weight</option>
+                                            <option value="first_name">Name</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-2 mt-2" wire:model="sortDirection">

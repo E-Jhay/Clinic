@@ -109,6 +109,14 @@
                   </p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('bmi-monthly-report')}}" class="nav-link">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>
+                    BMI Report
+                  </p>
+                </a>
+              </li>
             </ul>
           </li>
 

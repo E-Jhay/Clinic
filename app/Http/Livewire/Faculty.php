@@ -50,6 +50,9 @@ class Faculty extends Component
         //     ->paginate($this->perPage);
         return HealthProfile::select('id', 'first_name', 'middle_name', 'last_name', 'age', 'sex', 'address', 'designation_id', 'course_id')
                 ->where('designation_id', 2)
+                ->where('first_name', 'like', $searchTerm)
+                ->orWhere('middle_name', 'like', $searchTerm)
+                ->orWhere('last_name', 'like', $searchTerm)
                 ->orderBy($this->sortBy, $this->sortDirection)
                 ->paginate($this->perPage);
     }
